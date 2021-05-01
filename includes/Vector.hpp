@@ -232,7 +232,8 @@ namespace ft{
 			void		resize(size_type capacity){
 				pointer resized;
 
-				resized = new value_type[capacity + 1];
+				resized = new value_type[sizeof(value_type) * (capacity + 1)];
+				std::cout << (sizeof(value_type) * (capacity + 1)) << std::endl;
 				if (_data != NULL) {
 					std::memcpy(resized, _data, capacity * sizeof(value_type));
 					delete [] _data;
