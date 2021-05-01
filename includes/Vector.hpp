@@ -153,8 +153,10 @@ namespace ft{
 				*this->assign(start, end);
 			};
 
-			~vector(){
-				delete [] _data;
+			~vector() {
+				this->clear();
+				// if (this->_data)
+					// delete [] _data;
 			};
 
 			iterator begin() {
@@ -207,7 +209,7 @@ namespace ft{
 
 			void push_back(const_reference value){ // TODO ошибка с несколькими строками
 				resize();
-				_data[_size] = value; //ошибка тут
+				new(&this->_data[this->_size]) value_type(value);
 				_size++;
 			};
 
@@ -221,7 +223,7 @@ namespace ft{
 			};
 
 			bool		empty() const {
-				return ((_size == 0 ) ? true : false);
+				return (_size == 0);
 			};
 
 			size_type	capacity() const {
@@ -233,9 +235,9 @@ namespace ft{
 				pointer resized;
 
 				resized = new value_type[sizeof(value_type) * (capacity + 1)];
-				std::cout << (sizeof(value_type) * (capacity + 1)) << std::endl;
 				if (_data != NULL) {
 					std::memcpy(resized, _data, capacity * sizeof(value_type));
+					this->clear();
 					delete [] _data;
 				}
 				_data = resized;
