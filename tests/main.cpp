@@ -56,10 +56,12 @@ int		main(void){
 	ft::vector<std::string> vec;
 	vec.push_back("hello");
 	vec.push_back("eduard");
+	vec.push_back("hello11");
+	vec.push_back("hello20");
 
 	std::cout << "hi" << std::endl;
-	// ft::vector<std::string>::iterator it1 = vec.begin();
-	// ft::vector<std::string>::iterator it2 = it1 + 1;
-	// std::cout << it2->size() << std::endl;
+	ft::vector<std::string>::iterator it1 = vec.begin();
+	ft::vector<std::string>::iterator it2 = it1 + 1;
+	std::cout << *it2 << std::endl;
 	return (0);
 }

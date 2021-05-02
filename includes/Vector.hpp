@@ -125,10 +125,11 @@ namespace ft{
 			void		resize(){
 				if (_size >= _capacity){
 					_capacity += __RESIZE_VALUE;
+					resize(_capacity);
 				} else if (_capacity != __RESIZE_VALUE && _size < _capacity - __RESIZE_VALUE) {
 					_capacity -= __RESIZE_VALUE;
+					resize(_capacity);
 				}
-				resize(_capacity);
 			};
 
 		public:
@@ -155,8 +156,8 @@ namespace ft{
 
 			~vector() {
 				this->clear();
-				// if (this->_data)
-					// delete [] _data;
+				if (this->_data)
+					delete [] _data;
 			};
 
 			iterator begin() {
@@ -175,7 +176,7 @@ namespace ft{
 			
 			void clear(){
 				for (size_type i = 0; i < this->_size; i++)
-					this->_data[i].value_type::~value_type();
+					this->_data[i].~value_type();
 				_size = 0;
 			}
 
@@ -236,8 +237,10 @@ namespace ft{
 
 				resized = new value_type[sizeof(value_type) * (capacity + 1)];
 				if (_data != NULL) {
+					size_type old_size = _size;
 					std::memcpy(resized, _data, capacity * sizeof(value_type));
 					this->clear();
+					_size = old_size;
 					delete [] _data;
 				}
 				_data = resized;
