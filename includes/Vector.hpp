@@ -232,9 +232,9 @@ namespace ft{
 			vector(const vector &obj){
 				*this = obj;
 			};
-
-			vector(const_iterator start, const_iterator end){
-				*this->assign(start, end);
+			template <class InputIterator>
+         	 vector (InputIterator first, InputIterator last)){
+				*this->assign(first, last);
 			};
 
 			~vector() {
@@ -249,16 +249,12 @@ namespace ft{
 				vector<value_type> cpy;
 				size_type i = 0;
 				for (iterator it = this->begin(); i < _size; it++, i++){
-					std::cout << "hi cpy size = " << cpy.size() << std::endl;
 					if (pos - it == 1) {
 						cpy.push_back(value);
 						ret = it;
 					}
 					cpy.push_back(*it);
-					std::cout << "  cpy size = " << cpy.size() << cpy.back() << std::endl;
-
 				}
-				std::cout << "cpy size = " << cpy.size() << std::endl;
 				*this = cpy;
 				return (ret);
 			};
@@ -271,8 +267,8 @@ namespace ft{
 					_data[i] = value;
 				_size = count;
 			};
-
-			void assign(iterator first, iterator last){
+			template <class InputIterator>
+			 void assign(InputIterator first, InputIterator last) {
 				size_t l = last - first;
 				if (l > _capacity)
 					resize(l + _capacity + 2);
@@ -366,9 +362,13 @@ namespace ft{
 
 			void pop_back(){
 				resize();
+				this->_data[_size].~value_type();
 				_size--;
 			}
-			
+			size_type max_size() const {
+				return (UINT32_MAX / sizeof(value_type));
+			};
+
 			size_type	size() const {
 				return (_size);
 			};
@@ -445,8 +445,7 @@ namespace ft{
 				return (true);
 			};
 
-			// template<class T>
-			 bool operator!=(const vector<T> &rhs){
+			bool operator!=(const vector<T> &rhs){
 				return (!(*this == rhs));
 			};
 	};
