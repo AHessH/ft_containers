@@ -33,6 +33,12 @@ int	main(void){
 	// ft::vector<char> cp;
 	// cp.push_back('d');
 	// cp.push_back('f');
+	ft::vector<char> ch1;
+	ch1.push_back('a');
+	ch1.push_back('b');
+	ch1.push_back('c');
+	ch1.push_back('d');
+	ch1.push_back('f');
 
 	ft::vector<char> ch;
 	ch.push_back('a');
@@ -40,13 +46,13 @@ int	main(void){
 	ch.push_back('c');
 	ch.push_back('d');
 	ch.push_back('f');
-	std::cout << ch.size() << std::endl;
 
-	ft::vector<char>::iterator it = ch.end();
-	ch.insert(it, 'z');
+	ft::vector<char>::iterator it = ch.begin();
+	//it -= 3;
+	ch.erase(ch.begin(), it);
 
-	for (ft::vector<char>::iterator it = ch.begin(); it <= ch.end(); it++){
-		std::cout << *it << " ";
+	for (ft::vector<char>::iterator it = ch.begin(); it < ch.end(); it++){
+		std::cout << "|" << *it << "|" << " ";
 	}
 	std::cout << std::endl;
 	std::cout << ch.size() << ch.back() << std::endl;

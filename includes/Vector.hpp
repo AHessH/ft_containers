@@ -245,18 +245,83 @@ namespace ft{
 
 			iterator insert(iterator pos, const_reference value){
 				iterator it;
-				iterator ret;
-				vector<value_type> cpy;
-				size_type i = 0;
-				for (iterator it = this->begin(); i < _size; it++, i++){
-					if (pos - it == 1) {
-						cpy.push_back(value);
-						ret = it;
-					}
-					cpy.push_back(*it);
+				size_type old_size = _size;
+
+				if (_size + 1 > _capacity)
+					this->reserve(_capacity + __RESIZE_VALUE);
+				for (iterator it = this->end(); _size >= 0 && it != pos; ((_size != 0) ?_size-- : 0), it--){
+					pointer tmp = this->_data[_size + 1];
+					new(&this->_data[this->_size + 1]) value_type(_data[_size]);
+					if (tmp)
+						tmp->~value_type();
 				}
-				*this = cpy;
-				return (ret);
+				new(&this->_data[this->_size + 1]) value_type(value);
+				
+				_size = old_size + 1;
+				return (it);
+			};
+
+			void insert (iterator position, size_type n, const_reference val){
+				iterator it;
+				size_type old_size = _size;
+
+				if (_size + n > _capacity)
+					this->reserve(_capacity + __RESIZE_VALUE + (n / __RESIZE_VALUE));
+				for (iterator it = this->end(); _size >= 0 && it != position; ((_size != 0) ?_size-- : 0), it--){
+					pointer tmp = &this->_data[_size + 1];
+					new(&this->_data[this->_size + 1]) value_type(_data[_size]);
+					if (tmp)
+						tmp->~value_type();
+				}
+				size_type i = 0;
+				for (; i < n; i++)
+					new(&this->_data[this->_size + 1 + i]) value_type(val);
+				_size = old_size + i;
+			};
+
+			template <class InputIterator>
+    		 void insert (iterator position, InputIterator first, InputIterator last){
+				iterator it;
+				size_type old_size = _size;
+
+				if (_size + (first - last) > _capacity)
+					this->reserve(_capacity + __RESIZE_VALUE + ((first - last) / __RESIZE_VALUE));
+				for (iterator it = this->end(); _size >= 0 && it != position; ((_size != 0) ?_size-- : 0), it--){
+					pointer tmp = &this->_data[_size + 1];
+					new(&this->_data[this->_size + 1]) value_type(_data[_size]);
+					if (tmp)
+						tmp->~value_type();
+				}
+				size_type i = 0;
+				for (; first < last; first++, i++)
+					new(&this->_data[this->_size + 1 + i]) value_type(*first);
+				_size = old_size + i;
+			};
+
+			iterator erase (iterator position){
+				iterator it;
+				size_type old_size = _size;
+
+				int i = 1;
+				for (iterator it = this->begin(); i <= _size; it++, i++){
+					if (it >= position)
+						new(&this->_data[i]) value_type(_data[i + 1]);
+				}
+				_size = old_size - 1;
+				return (it);
+			};
+			
+			iterator erase (iterator first, iterator last){
+				iterator it;
+				size_type old_size = _size;
+
+				int i = 1;
+				for (iterator it = this->begin(); i <= _size; it++, i++){
+					if (it >= first && it <= last)
+						new(&this->_data[i]) value_type(_data[i + (last - first)]);
+				}
+				_size = old_size - (last - first);
+				return (it);
 			};
 
 			void assign(size_type count, const_reference value){
