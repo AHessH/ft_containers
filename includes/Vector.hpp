@@ -5,7 +5,7 @@
 #include "Algorithm.hpp"
 
 #ifndef __RESIZE_VALUE
-# define __RESIZE_VALUE 64
+# define __RESIZE_VALUE 128
 #endif
 
 namespace ft{
@@ -24,80 +24,163 @@ namespace ft{
 		 	pointer p;
 
 		public:
-
-		 	VectorIterator(pointer p) {
-				this->p = p;
-			};
-			VectorIterator(const VectorIterator<value_type> &obj) {
-				*this = obj;
-			};
+			VectorIterator(): p(NULL) {};
+		 	VectorIterator(pointer p): p(p) {};
+			VectorIterator(const VectorIterator &obj): p(obj.p) {};
 			~VectorIterator() {};
 
-			ft::VectorIterator<value_type>& operator=(const ft::VectorIterator<value_type> &obj) {
+			VectorIterator &operator=(const VectorIterator &obj) {
 				this->p = obj.p;
 				return (*this);
 			};
-			value_type& operator*(){
+			
+			reference operator*(){
 				return (*(this->p));
 			};
-			ft::VectorIterator<value_type>& operator++() {
+			VectorIterator& operator++() {
 				(this->p)++;
 				return (*this);
 			};
-			ft::VectorIterator<value_type>& operator++(int) {
+			VectorIterator& operator++(int) {
 				++this->p;
 				return (*this);
-			}
-			ft::VectorIterator<value_type>& operator+=(unsigned int num) {
+			};
+			VectorIterator& operator+=(unsigned int num) {
 				(this->p) = this->p + num;
 				return (*this);
 			};
-			ft::VectorIterator<value_type> operator+(unsigned int num) const {
-				return ((VectorIterator<value_type>(*this)) += num);
+			VectorIterator operator+(unsigned int num) const {
+				return ((VectorIterator(*this)) += num);
 			};
-			ft::VectorIterator<value_type>& operator--() {
+			VectorIterator& operator--() {
 				(this->p)--;
 				return (*this);
 			};
-			ft::VectorIterator<value_type>& operator--(int) {
+			VectorIterator& operator--(int) {
 				--this->p;
 				return (*this);
 			}
-			ft::VectorIterator<value_type>& operator-=(unsigned int num) {
+			VectorIterator& operator-=(unsigned int num) {
 				(this->p) = this->p - num;
 				return (*this);
-			};		
-			ft::VectorIterator<value_type>& operator-(unsigned int num) const {
-				return (ft::VectorIterator<value_type>(*this) -= num);
+			};
+			VectorIterator& operator-(unsigned int num) const {
+				return (VectorIterator(*this) -= num);
+			};
+			difference_type operator-(VectorIterator const &obj) const {
+				return (this->p - obj.p);
 			};
 			pointer operator->(){
 				return (this->p);
 			};
-			// value_type* operator[](unsigned int num){
-			// 	return (&(this->p)[num]);
-			// };
-			// bool operator==(const ft::VectorIterator<value_type>& rhs) const {
-			// 	return (*(this->p) == *(rhs.p));
-			// };
-			// bool operator!=(const ft::VectorIterator<value_type>& rhs) const {			
-			// 	return !(*this == rhs);
-			// };
-			// bool operator>(const ft::VectorIterator<value_type>& rhs) const {
-			// 	return (*(this->p) > *(rhs.p));
-			// };
-			// bool operator<(const ft::VectorIterator<value_type>& rhs) const {
-			// 	return (*(this->p) < *(rhs.p));
-			// };
-			// bool operator>=(const ft::VectorIterator<value_type>& rhs) const {
-			// 	return (*(this->p) >= *(rhs.p));
-			// };
-			// bool operator<=(const ft::VectorIterator<value_type>& rhs) const {
-			// 	return (*(this->p) <= *(rhs.p));
-			// };
+			reference operator[](int num){
+				return (*(this->p + num));
+			};
+			bool operator==(const VectorIterator& rhs) const {
+				return (this->p == rhs.p);
+			};
+			bool operator!=(const VectorIterator& rhs) const {			
+				return (!(*this == rhs));
+			};
+			bool operator>(const VectorIterator& rhs) const {
+				return (this->p > rhs.p);
+			};
+			bool operator<(const VectorIterator& rhs) const {
+				return (this->p < rhs.p);
+			};
+			bool operator>=(const VectorIterator& rhs) const {
+				return (this->p >= rhs.p);
+			};
+			bool operator<=(const VectorIterator& rhs) const {
+				return (this->p <= rhs.p);
+			};
+			
+			operator VectorIterator<value_type const>() {return (this->p);};
 	};
 	template<class T>
-	 class ReverseIterator: protected ft::VectorIterator<T>{
+	 class ReverseIterator{
+		 		public:
+		 	typedef 	T 						value_type;
+	    	typedef 	value_type* 			pointer;
+	    	typedef 	value_type const* 		const_pointer;
+	    	typedef 	value_type& 			reference;
+	    	typedef 	value_type const& 		const_reference;
+	    	typedef 	std::ptrdiff_t 			difference_type;
 
+		private:
+		 	pointer p;
+
+		public:
+			ReverseIterator(): p(NULL) {};
+		 	ReverseIterator(pointer p): p(p) {};
+			ReverseIterator(const ReverseIterator &obj): p(obj.p) {};
+			~ReverseIterator() {};
+
+			ReverseIterator &operator=(const ReverseIterator &obj) {
+				this->p = obj.p;
+				return (*this);
+			};
+			
+			reference operator*(){
+				return (*(this->p));
+			};
+			ReverseIterator& operator++() {
+				(this->p)--;
+				return (*this);
+			};
+			ReverseIterator& operator++(int) {
+				--this->p;
+				return (*this);
+			};
+			ReverseIterator& operator+=(unsigned int num) {
+				std::cout << "hi" << std::endl;
+				(this->p) = this->p - num;
+				return (*this);
+			};
+			ReverseIterator operator+(unsigned int num) const {
+				return ((ReverseIterator(*this)) += num);
+			};
+			ReverseIterator& operator--() {
+				(this->p)++;
+				return (*this);
+			};
+			ReverseIterator& operator--(int) {
+				++this->p;
+				return (*this);
+			}
+			ReverseIterator& operator-=(unsigned int num) {
+				(this->p) = this->p + num;
+				return (*this);
+			};		
+			ReverseIterator& operator-(unsigned int num) const {
+				return (ReverseIterator(*this) += num);
+			};
+			pointer operator->(){
+				return (this->p);
+			};
+			reference operator[](int num){
+				return (*(this->p - num));
+			};
+			bool operator==(const ReverseIterator& rhs) const {
+				return (this->p == rhs.p);
+			};
+			bool operator!=(const ReverseIterator& rhs) const {			
+				return (!(*this == rhs));
+			};
+			bool operator>(const ReverseIterator& rhs) const {
+				return (this->p < rhs.p);
+			};
+			bool operator<(const ReverseIterator& rhs) const {
+				return (this->p > rhs.p);
+			};
+			bool operator>=(const ReverseIterator& rhs) const {
+				return (this->p <= rhs.p);
+			};
+			bool operator<=(const ReverseIterator& rhs) const {
+				return (this->p >= rhs.p);
+			};
+			
+			operator ReverseIterator<value_type const>() {return (this->p);};
 	};
 
 	template<class T>
@@ -160,16 +243,83 @@ namespace ft{
 					delete [] _data;
 			};
 
-			iterator begin() {
-				return (iterator(this->_data));
+			iterator insert(iterator pos, const_reference value){
+				iterator it;
+				iterator ret;
+				vector<value_type> cpy;
+				size_type i = 0;
+				for (iterator it = this->begin(); i < _size; it++, i++){
+					std::cout << "hi cpy size = " << cpy.size() << std::endl;
+					if (pos - it == 1) {
+						cpy.push_back(value);
+						ret = it;
+					}
+					cpy.push_back(*it);
+					std::cout << "  cpy size = " << cpy.size() << cpy.back() << std::endl;
+
+				}
+				std::cout << "cpy size = " << cpy.size() << std::endl;
+				*this = cpy;
+				return (ret);
 			};
 
+			void assign(size_type count, const_reference value){
+				if (count >= _capacity)
+					resize(count + _capacity + 2);
+				std::cout << count << std::endl;
+				for (size_type i = 1; i <= count; i++)
+					_data[i] = value;
+				_size = count;
+			};
+
+			void assign(iterator first, iterator last){
+				size_t l = last - first;
+				if (l > _capacity)
+					resize(l + _capacity + 2);
+				for (size_type i = 1; first != last; first++, i++){
+					_data[i] = *first;
+				}
+				_size = l;
+			};
+
+			iterator begin() {
+				return (iterator(&(_data[1])));
+			};
+
+			const_iterator begin() const {
+				return (const_iterator(&(_data[1])));
+			};
+
+			reverse_iterator rbegin() {
+				return (reverse_iterator(&(_data[_size])));
+
+			};
+
+			const_reverse_iterator rbegin() const {
+				return (const_reverse_iterator(&(_data[_size])));
+
+			};
+
+			reverse_iterator rend() {
+				return (reverse_iterator(&(_data[0])));
+
+			};
+
+			const_reverse_iterator rend() const {
+				return (const_reverse_iterator(&(_data[0])));
+
+			};
+			
 			iterator end() {
-				return (iterator(&(_data[_size])));
+				return (iterator(&(_data[_size + 1])));
+			};
+
+			const_iterator end() const {
+				return (const_iterator(&(_data[_size + 1])));
 			};
 
 			void swap(vector& other){
-				ft::swap(other, *this);
+				ft::swap(other._data, this->_data);
 				ft::swap(other._size, this->_size);
 				ft::swap(other._capacity, this->_capacity);
 			}
@@ -183,34 +333,34 @@ namespace ft{
 			reference at(size_type pos){
 				if (pos >= _size)
 					throw out_of_range();
-				return (_data[pos]);
+				return (_data[pos + 1]);
 			};
 
-			const_reference at( size_type pos ) const{
+			const_reference at(size_type pos) const{
 				if (pos >= _size)
 					throw out_of_range();
-				return (_data[pos]);
+				return (_data[pos + 1]);
 			};
 
 			reference front(){
-				return (_data[0]);
+				return (_data[1]);
 			};
 
 			const_reference front() const{
-				return (_data[0]);
+				return (_data[1]);
 			};
 
 			reference back(){
-				return (_data[_size - 1]);
+				return (_data[_size]);
 			}
 
 			const_reference back() const{
-				return (_data[_size - 1]);
+				return (_data[_size + 1]);
 			}
 
-			void push_back(const_reference value){ // TODO ошибка с несколькими строками
+			void push_back(const_reference value) {
 				resize();
-				new(&this->_data[this->_size]) value_type(value);
+				new(&this->_data[this->_size + 1]) value_type(value);
 				_size++;
 			};
 
@@ -235,7 +385,7 @@ namespace ft{
 			void		resize(size_type capacity){
 				pointer resized;
 
-				resized = new value_type[sizeof(value_type) * (capacity + 1)];
+				resized = new value_type[sizeof(value_type) * (capacity + 2)];
 				if (_data != NULL) {
 					size_type old_size = _size;
 					std::memcpy(resized, _data, capacity * sizeof(value_type));

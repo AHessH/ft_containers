@@ -1,67 +1,53 @@
-#include "Vector.hpp"
+#include "../includes/Vector.hpp"
 #include <iostream>
 #include <vector>
 #include <string>
+// void stuff(const ft::vector<std::string>& myvector )
+// {
+//     ft::vector<std::string>::const_iterator it = myvector.begin(); //const version will be called
+// 	std::cout << *it << std::endl;
 
-class Fixed
-{
-	private:
-		int		c_fixed_poind_value;
+// }
+// int		main(void){
 
-	public:
-		Fixed(int value);
-		Fixed(const Fixed &);
-		~Fixed();
-		int getRawBits(void) const;
-		void setRawBits(int const raw);
-		Fixed &operator=(const Fixed &);
-};
+// 	ft::vector<std::string> vec;
+// 	vec.push_back("hello");
+// 	vec.push_back("eduard");
+// 	vec.push_back("hello11");
+// 	vec.push_back("hello20");
 
-Fixed::Fixed(int value):c_fixed_poind_value(value)
-{
-	std::cout << "Default constructor called" << std::endl;
-}
+// 	std::cout << "hi" << std::endl;
 
-Fixed::Fixed(const Fixed &d)
-{
-	std::cout << "Copy constructor called" << std::endl;
-	this->c_fixed_poind_value = d.getRawBits();
-}
+// 	// stuff( vec );
+// 	ft::vector<std::string>::reverse_iterator it1 = vec.rbegin();
+// 	ft::vector<std::string>::reverse_iterator it2 = it1 - 1;
+// 	// it2++;
+	
+// 	for (ft::vector<std::string>::reverse_iterator it1 = vec.rbegin(); it1 != vec.rend(); it1++)
+// 		std::cout << *it1 << std::endl;
+// 	return (0);
+// }
 
-Fixed::~Fixed()
-{
-	std::cout << "Destructor called" << std::endl;
-}
+int	main(void){
 
-int Fixed::getRawBits(void) const
-{
-	std::cout << "getRawBits member function called" << std::endl;
-	return (c_fixed_poind_value);
-}
+	// ft::vector<char> cp;
+	// cp.push_back('d');
+	// cp.push_back('f');
 
-void Fixed::setRawBits(int const raw)
-{
-	c_fixed_poind_value = raw;
-}
+	ft::vector<char> ch;
+	ch.push_back('a');
+	ch.push_back('b');
+	ch.push_back('c');
+	ch.push_back('d');
+	ch.push_back('f');
+	std::cout << ch.size() << std::endl;
 
-Fixed &Fixed::operator=(const Fixed &d)
-{
-	std::cout << "Assignation operator called" << std::endl;
-	c_fixed_poind_value = d.getRawBits();
-	return (*this);
-}
+	ft::vector<char>::iterator it = ch.end();
+	ch.insert(it, 'z');
 
-int		main(void){
-
-	ft::vector<std::string> vec;
-	vec.push_back("hello");
-	vec.push_back("eduard");
-	vec.push_back("hello11");
-	vec.push_back("hello20");
-
-	std::cout << "hi" << std::endl;
-	ft::vector<std::string>::iterator it1 = vec.begin();
-	ft::vector<std::string>::iterator it2 = it1 + 1;
-	std::cout << *it2 << std::endl;
-	return (0);
+	for (ft::vector<char>::iterator it = ch.begin(); it <= ch.end(); it++){
+		std::cout << *it << " ";
+	}
+	std::cout << std::endl;
+	std::cout << ch.size() << ch.back() << std::endl;
 }

@@ -4,8 +4,8 @@ HDRS		:= Vector.hpp
 OBJS		:= $(SRCS:.cpp=.o)
 
 CXX			:= clang++
-CXXFLAGS	:= -std=c++98 -Iincludes/
-# CXXFLAGS	+= -Wall -Werror -Wextra
+CXXFLAGS	:= -std=c++11 -Iincludes/
+#CXXFLAGS	+= -Wall -Werror -Wextra
 
 all: $(NAME)
 
