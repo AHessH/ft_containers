@@ -202,7 +202,7 @@ namespace ft{
 		private:
 			pointer					_data;
 			size_type 				_size; //_data[_size] является последним элементом, для итератора
-			size_type 				_capacity; // выделяется на 1 больше, 
+			size_type 				_capacity; // выделяется на 2 больше, 
 
 			// Выделяет или освобождает память равную __RESIZE_VALUE объекта
 			void		resize(){
