@@ -1,11 +1,11 @@
 NAME		:= a.out
 SRCS		:= tests/main.cpp
-HDRS		:= Vector.hpp
+HDRS		:= Vector.hpp Colors.hpp
 OBJS		:= $(SRCS:.cpp=.o)
 
 CXX			:= clang++
 CXXFLAGS	:= -std=c++11 -Iincludes/
-#CXXFLAGS	+= -Wall -Werror -Wextra
+CXXFLAGS	+= -Wall -Werror -Wextra
 
 all: $(NAME)
 

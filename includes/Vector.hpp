@@ -233,7 +233,7 @@ namespace ft{
 				*this = obj;
 			};
 			template <class InputIterator>
-         	 vector (InputIterator first, InputIterator last)){
+         	 vector (InputIterator first, InputIterator last){
 				*this->assign(first, last);
 			};
 
@@ -250,10 +250,7 @@ namespace ft{
 				if (_size + 1 > _capacity)
 					this->reserve(_capacity + __RESIZE_VALUE);
 				for (iterator it = this->end(); _size >= 0 && it != pos; ((_size != 0) ?_size-- : 0), it--){
-					pointer tmp = this->_data[_size + 1];
 					new(&this->_data[this->_size + 1]) value_type(_data[_size]);
-					if (tmp)
-						tmp->~value_type();
 				}
 				new(&this->_data[this->_size + 1]) value_type(value);
 				
@@ -261,17 +258,14 @@ namespace ft{
 				return (it);
 			};
 
-			void insert (iterator position, size_type n, const_reference val){
+			void insert(iterator position, size_type n, const_reference val){
 				iterator it;
 				size_type old_size = _size;
 
 				if (_size + n > _capacity)
 					this->reserve(_capacity + __RESIZE_VALUE + (n / __RESIZE_VALUE));
 				for (iterator it = this->end(); _size >= 0 && it != position; ((_size != 0) ?_size-- : 0), it--){
-					pointer tmp = &this->_data[_size + 1];
 					new(&this->_data[this->_size + 1]) value_type(_data[_size]);
-					if (tmp)
-						tmp->~value_type();
 				}
 				size_type i = 0;
 				for (; i < n; i++)
@@ -280,17 +274,14 @@ namespace ft{
 			};
 
 			template <class InputIterator>
-    		 void insert (iterator position, InputIterator first, InputIterator last){
+    		 void insert(iterator position, InputIterator first, InputIterator last){
 				iterator it;
 				size_type old_size = _size;
 
 				if (_size + (first - last) > _capacity)
 					this->reserve(_capacity + __RESIZE_VALUE + ((first - last) / __RESIZE_VALUE));
 				for (iterator it = this->end(); _size >= 0 && it != position; ((_size != 0) ?_size-- : 0), it--){
-					pointer tmp = &this->_data[_size + 1];
 					new(&this->_data[this->_size + 1]) value_type(_data[_size]);
-					if (tmp)
-						tmp->~value_type();
 				}
 				size_type i = 0;
 				for (; first < last; first++, i++)
@@ -327,7 +318,6 @@ namespace ft{
 			void assign(size_type count, const_reference value){
 				if (count >= _capacity)
 					resize(count + _capacity + 2);
-				std::cout << count << std::endl;
 				for (size_type i = 1; i <= count; i++)
 					_data[i] = value;
 				_size = count;
@@ -453,7 +443,7 @@ namespace ft{
 				resized = new value_type[sizeof(value_type) * (capacity + 2)];
 				if (_data != NULL) {
 					size_type old_size = _size;
-					std::memcpy(resized, _data, capacity * sizeof(value_type));
+					std::memcpy(resized, _data, (capacity + __RESIZE_VALUE) * sizeof(value_type));
 					this->clear();
 					_size = old_size;
 					delete [] _data;
@@ -492,11 +482,11 @@ namespace ft{
 			};
 
 			const_reference &operator[](size_type index) const {
-				return (_data[index]);
+				return (_data[index + 1]);
 			};
 
 			reference &operator[](size_type index){
-				return (_data[index]);
+				return (_data[index + 1]);
 			};
 				// template<class T>
 			 bool operator==(const vector<T> &rhs){
