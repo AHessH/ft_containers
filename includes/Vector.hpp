@@ -260,12 +260,15 @@ namespace ft{
 
 			void insert(iterator position, size_type n, const_reference val){
 				iterator it;
+				iterator tmp_position = position;
 				size_type old_size = _size;
-
+				size_type offset = position - this->begin();
+				
 				if (_size + n > _capacity)
 					this->reserve(_capacity + __RESIZE_VALUE + (n / __RESIZE_VALUE));
+				position = this->begin() + offset;
 				for (iterator it = this->end(); _size >= 0 && it != position; ((_size != 0) ?_size-- : 0), it--){
-					new(&this->_data[this->_size + 1]) value_type(_data[_size]);
+					new(&this->_data[this->_size + n]) value_type(_data[_size]);
 				}
 				size_type i = 0;
 				for (; i < n; i++)
@@ -276,12 +279,15 @@ namespace ft{
 			template <class InputIterator>
     		 void insert(iterator position, InputIterator first, InputIterator last){
 				iterator it;
+				iterator tmp_position = position;
 				size_type old_size = _size;
+				size_type offset = position - this->begin();
 
-				if (_size + (first - last) > _capacity)
-					this->reserve(_capacity + __RESIZE_VALUE + ((first - last) / __RESIZE_VALUE));
+				if (_size + (last - first) > _capacity)
+					this->reserve(_capacity + __RESIZE_VALUE + ((last - first) / __RESIZE_VALUE));
+				position = this->begin() + offset;
 				for (iterator it = this->end(); _size >= 0 && it != position; ((_size != 0) ?_size-- : 0), it--){
-					new(&this->_data[this->_size + 1]) value_type(_data[_size]);
+					new(&this->_data[this->_size + (last - first)]) value_type(_data[_size]);
 				}
 				size_type i = 0;
 				for (; first < last; first++, i++)
