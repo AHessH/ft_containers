@@ -1,6 +1,6 @@
 NAME		:= a.out
 SRCS		:= tests/main.cpp
-HDRS		:= Vector.hpp Colors.hpp
+HDRS		:= Vector.hpp List.hpp
 OBJS		:= $(SRCS:.cpp=.o)
 
 CXX			:= clang++

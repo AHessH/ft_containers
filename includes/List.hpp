@@ -27,8 +27,9 @@ namespace ft{
 				List 		*_next;
 			}			_node;
 			size_type 	_size;
+		public:
 			
-	}
+	};
 
 }
 

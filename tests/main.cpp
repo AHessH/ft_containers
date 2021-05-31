@@ -30,7 +30,7 @@ template<typename T>
 	std::cout << std::endl;
 }
 
-void	CheckVector(){
+bool	CheckVector(){
 	bool result = true;
 	// Push back
 	{
@@ -631,9 +631,14 @@ void	CheckVector(){
 		PRINT_DOUBLE_TAB;
 		result_vec("Check swap() 2nd vector", ft2_vec, std2_vec, result);
 	}
+	return (result);
 }
 
+void	CheckList(){
+
+}
 int	main(void){
-	CheckVector();
+	// CheckVector();
+	CheckList();
 	return (0);
 }
