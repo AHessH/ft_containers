@@ -631,6 +631,216 @@ bool	CheckVector(){
 		PRINT_DOUBLE_TAB;
 		result_vec("Check swap() 2nd vector", ft2_vec, std2_vec, result);
 	}
+	// == 
+	{
+		{
+			PRINT_DOUBLE_TAB;
+			ft::vector<int> ft1_vec;
+			ft::vector<int> ft2_vec;
+			for (int i = 0; i < 6542; i ++){
+				ft1_vec.push_back(i);
+				ft2_vec.push_back(i + 10000);
+			}
+			std::cout << "Check ==() case1: ";
+			if (ft1_vec == ft2_vec) {
+				std::cout << "\033[0;31;40mKO\033[0m\n";
+				result = false;
+			} else {
+				std::cout << "\033[0;32;40mOK\033[0m\n";
+			}
+		}
+		{
+			PRINT_DOUBLE_TAB;
+			ft::vector<int> ft1_vec;
+			ft::vector<int> ft2_vec;
+			for (int i = 0; i < 6542; i ++){
+				ft1_vec.push_back(i);
+				ft2_vec.push_back(i);
+			}
+			std::cout << "Check ==() case2: ";
+			if (ft1_vec == ft2_vec) {
+				std::cout << "\033[0;32;40mOK\033[0m\n";
+			} else {
+				std::cout << "\033[0;31;40mKO\033[0m\n";
+				result = false;
+			}
+		}
+	}
+	// != 
+	{
+		{
+			PRINT_DOUBLE_TAB;
+			ft::vector<int> ft1_vec;
+			ft::vector<int> ft2_vec;
+			for (int i = 0; i < 6542; i ++){
+				ft1_vec.push_back(i);
+				ft2_vec.push_back(i + 10000);
+			}
+			std::cout << "Check !=() case1: ";
+			if (ft1_vec != ft2_vec) {
+				std::cout << "\033[0;32;40mOK\033[0m\n";
+			} else {
+				std::cout << "\033[0;31;40mKO\033[0m\n";
+				result = false;
+			}
+		}
+		{
+			PRINT_DOUBLE_TAB;
+			ft::vector<int> ft1_vec;
+			ft::vector<int> ft2_vec;
+			for (int i = 0; i < 6542; i ++){
+				ft1_vec.push_back(i);
+				ft2_vec.push_back(i);
+			}
+			std::cout << "Check !=() case2: ";
+			if (ft1_vec != ft2_vec) {
+				std::cout << "\033[0;31;40mKO\033[0m\n";
+				result = false;
+			} else {
+				std::cout << "\033[0;32;40mOK\033[0m\n";
+			}
+		}
+	}
+	// > 
+	{
+		{
+			PRINT_DOUBLE_TAB;
+			ft::vector<int> ft1_vec;
+			ft::vector<int> ft2_vec;
+			for (int i = 0; i < 6542; i ++){
+				ft1_vec.push_back(i);
+				ft2_vec.push_back(i + 10000);
+			}
+			std::cout << "Check >() case1: ";
+			if (ft2_vec > ft1_vec) {
+				std::cout << "\033[0;32;40mOK\033[0m\n";
+			} else {
+				std::cout << "\033[0;31;40mKO\033[0m\n";
+				result = false;
+			}
+		}
+		{
+			PRINT_DOUBLE_TAB;
+			ft::vector<int> ft1_vec;
+			ft::vector<int> ft2_vec;
+			for (int i = 0; i < 6542; i ++){
+				ft1_vec.push_back(i);
+				ft2_vec.push_back(i);
+			}
+			std::cout << "Check >() case2: ";
+			if (ft1_vec > ft2_vec) {
+				std::cout << "\033[0;31;40mKO\033[0m\n";
+				result = false;
+			} else {
+				std::cout << "\033[0;32;40mOK\033[0m\n";
+			}
+		}
+	}
+	// < 
+	{
+		{
+			PRINT_DOUBLE_TAB;
+			ft::vector<int> ft1_vec;
+			ft::vector<int> ft2_vec;
+			for (int i = 0; i < 6542; i ++){
+				ft1_vec.push_back(i);
+				ft2_vec.push_back(i + 10000);
+			}
+			std::cout << "Check <() case1: ";
+			if (ft1_vec < ft2_vec) {
+				std::cout << "\033[0;32;40mOK\033[0m\n";
+			} else {
+				std::cout << "\033[0;31;40mKO\033[0m\n";
+				result = false;
+			}
+		}
+		{
+			PRINT_DOUBLE_TAB;
+			ft::vector<int> ft1_vec;
+			ft::vector<int> ft2_vec;
+			for (int i = 0; i < 6542; i ++){
+				ft1_vec.push_back(i);
+				ft2_vec.push_back(i);
+			}
+			std::cout << "Check <() case2: ";
+			if (ft1_vec < ft2_vec) {
+				std::cout << "\033[0;31;40mKO\033[0m\n";
+				result = false;
+			} else {
+				std::cout << "\033[0;32;40mOK\033[0m\n";
+			}
+		}
+	}
+	// >=
+	{
+		{
+			PRINT_DOUBLE_TAB;
+			ft::vector<int> ft1_vec;
+			ft::vector<int> ft2_vec;
+			for (int i = 0; i < 6542; i ++){
+				ft1_vec.push_back(i);
+				ft2_vec.push_back(i + 10000);
+			}
+			std::cout << "Check >=() case1: ";
+			if (ft2_vec >= ft1_vec) {
+				std::cout << "\033[0;32;40mOK\033[0m\n";
+			} else {
+				std::cout << "\033[0;31;40mKO\033[0m\n";
+				result = false;
+			}
+		}
+		{
+			PRINT_DOUBLE_TAB;
+			ft::vector<int> ft1_vec;
+			ft::vector<int> ft2_vec;
+			for (int i = 0; i < 6542; i ++){
+				ft1_vec.push_back(i);
+				ft2_vec.push_back(i);
+			}
+			std::cout << "Check >=() case2: ";
+			if (ft1_vec >= ft2_vec) {
+				std::cout << "\033[0;32;40mOK\033[0m\n";
+			} else {
+				std::cout << "\033[0;31;40mKO\033[0m\n";
+				result = false;
+			}
+		}
+	}
+	// <= 
+	{
+		{
+			PRINT_DOUBLE_TAB;
+			ft::vector<int> ft1_vec;
+			ft::vector<int> ft2_vec;
+			for (int i = 0; i < 6542; i ++){
+				ft1_vec.push_back(i);
+				ft2_vec.push_back(i + 10000);
+			}
+			std::cout << "Check <=() case1: ";
+			if (ft1_vec <= ft2_vec) {
+				std::cout << "\033[0;32;40mOK\033[0m\n";
+			} else {
+				std::cout << "\033[0;31;40mKO\033[0m\n";
+				result = false;
+			}
+		}
+		{
+			PRINT_DOUBLE_TAB;
+			ft::vector<int> ft1_vec;
+			ft::vector<int> ft2_vec;
+			for (int i = 0; i < 6542; i ++){
+				ft1_vec.push_back(i);
+				ft2_vec.push_back(i);
+			}
+			std::cout << "Check <=() case2: ";
+			if (ft1_vec <= ft2_vec) {
+				std::cout << "\033[0;32;40mOK\033[0m\n";
+			} else {
+				std::cout << "\033[0;31;40mKO\033[0m\n";
+				result = false;
+			}
+		}
+	}
 	return (result);
 }
 

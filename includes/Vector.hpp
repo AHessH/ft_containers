@@ -499,21 +499,40 @@ namespace ft{
 			reference &operator[](size_type index){
 				return (_data[index + 1]);
 			};
-				// template<class T>
-			 bool operator==(const vector<T> &rhs){
-				if (this->size() == rhs.size()){
-					for (size_t i = 0; i < this->size(); i++)
-						if (this->_data[i] != rhs.data[i])
-							return (false);
-				} else {
-					return (false);
-				}
-				return (true);
-			};
-
-			bool operator!=(const vector<T> &rhs){
-				return (!(*this == rhs));
-			};
 	};
+	template<typename T>
+	bool operator==(ft::vector<T> const &lhs, ft::vector<T> const &rhs) {
+		if (lhs.size() != rhs.size())
+			return (false);
+		for (size_t i = 0; i < lhs.size(); i++)
+			if (lhs[i] != rhs[i])
+				return (false);
+		return (true);
+	}
+
+	template<typename T>
+	bool operator!=(ft::vector<T> const &lhs, ft::vector<T> const &rhs) {
+		return (!(lhs == rhs));
+	}
+
+	template<typename T>
+	bool operator<(ft::vector<T> const &lhs, ft::vector<T> const &rhs) {
+		return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+	}
+
+	template<typename T>
+	bool operator<=(ft::vector<T> const &lhs, ft::vector<T> const &rhs) {
+		return (!(rhs < lhs));
+	}
+
+	template<typename T>
+	bool operator>(ft::vector<T> const &lhs, ft::vector<T> const &rhs) {
+		return (rhs < lhs);
+	}
+
+	template<typename T>
+	bool operator>=(ft::vector<T> const &lhs, ft::vector<T> const &rhs) {
+		return (!(lhs < rhs));
+	}
 
 }
