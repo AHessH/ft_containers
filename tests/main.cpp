@@ -1,4 +1,5 @@
-#include "../includes/Vector.hpp"
+#include "Vector.hpp"
+#include "List.hpp"
 #include <iostream>
 #include <vector>
 #include <string>
@@ -845,8 +846,19 @@ bool	CheckVector(){
 }
 
 void	CheckList(){
+	ft::list<int> tmp;
+	tmp.push_back(10);
+	std::cout << tmp.front() << std::endl;
+	tmp.push_front(20);
+	std::cout << tmp.front() << std::endl;
+	tmp.pop_front();
+	std::cout << tmp.front() << std::endl;
+	tmp.pop_back();
+	std::cout << tmp.front() << std::endl;
+
 
 }
+
 int	main(void){
 	// CheckVector();
 	CheckList();
