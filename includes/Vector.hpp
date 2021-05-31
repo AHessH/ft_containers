@@ -133,7 +133,6 @@ namespace ft{
 				return (*this);
 			};
 			ReverseIterator& operator+=(unsigned int num) {
-				std::cout << "hi" << std::endl;
 				(this->p) = this->p - num;
 				return (*this);
 			};
@@ -153,7 +152,7 @@ namespace ft{
 				return (*this);
 			};		
 			ReverseIterator& operator-(unsigned int num) const {
-				return (ReverseIterator(*this) += num);
+				return (ReverseIterator(*this) -= num);
 			};
 			pointer operator->(){
 				return (this->p);
@@ -208,11 +207,25 @@ namespace ft{
 			void		resize(){
 				if (_size >= _capacity){
 					_capacity += __RESIZE_VALUE;
-					resize(_capacity);
+					resize_internal(_capacity);
 				} else if (_capacity != __RESIZE_VALUE && _size < _capacity - __RESIZE_VALUE) {
 					_capacity -= __RESIZE_VALUE;
-					resize(_capacity);
+					resize_internal(_capacity);
 				}
+			};
+			void		resize_internal(size_type capacity){
+				pointer resized;
+
+				resized = new value_type[sizeof(value_type) * (capacity + 2)];
+				if (_data != NULL) {
+					size_type old_size = _size;
+					std::memcpy(resized, _data, (capacity + __RESIZE_VALUE) * sizeof(value_type));
+					this->clear();
+					_size = old_size;
+					delete [] _data;
+				}
+				_data = resized;
+				_capacity = capacity;
 			};
 
 		public:
@@ -226,7 +239,7 @@ namespace ft{
 
 			vector(const size_type capacity):
 			 _size(0), _capacity(capacity){
-				resize(_capacity);
+				resize_internal(_capacity);
 			};
 
 			vector(const vector &obj){
@@ -299,7 +312,7 @@ namespace ft{
 				iterator it;
 				size_type old_size = _size;
 
-				int i = 1;
+				size_type i = 1;
 				for (iterator it = this->begin(); i <= _size; it++, i++){
 					if (it >= position)
 						new(&this->_data[i]) value_type(_data[i + 1]);
@@ -312,10 +325,11 @@ namespace ft{
 				iterator it;
 				size_type old_size = _size;
 
-				int i = 1;
+				size_type i = 1;
 				for (iterator it = this->begin(); i <= _size; it++, i++){
-					if (it >= first && it <= last)
-						new(&this->_data[i]) value_type(_data[i + (last - first)]);
+					if (it < last)
+						continue ;
+					new(&this->_data[i - (last - first)]) value_type(_data[i]);
 				}
 				_size = old_size - (last - first);
 				return (it);
@@ -323,7 +337,7 @@ namespace ft{
 
 			void assign(size_type count, const_reference value){
 				if (count >= _capacity)
-					resize(count + _capacity + 2);
+					resize_internal(count + _capacity + 2);
 				for (size_type i = 1; i <= count; i++)
 					_data[i] = value;
 				_size = count;
@@ -332,7 +346,7 @@ namespace ft{
 			 void assign(InputIterator first, InputIterator last) {
 				size_t l = last - first;
 				if (l > _capacity)
-					resize(l + _capacity + 2);
+					resize_internal(l + _capacity + 2);
 				for (size_type i = 1; first != last; first++, i++){
 					_data[i] = *first;
 				}
@@ -443,35 +457,26 @@ namespace ft{
 			};
 
 			// Выделяет дополнительное место capacity
-			void		resize(size_type capacity){
-				pointer resized;
-
-				resized = new value_type[sizeof(value_type) * (capacity + 2)];
-				if (_data != NULL) {
-					size_type old_size = _size;
-					std::memcpy(resized, _data, (capacity + __RESIZE_VALUE) * sizeof(value_type));
-					this->clear();
-					_size = old_size;
-					delete [] _data;
-				}
-				_data = resized;
-				_capacity = capacity;
-			};
-
 			void		reserve(size_type capacity){
 				if (capacity > _capacity){
-					resize(capacity);
+					resize_internal(capacity);
 				}
 			};
 
 			// Записывает value в выделенные ячейки
-			void		resize(size_type capacity, value_type value){
-				size_type i = _size;
+			void		resize(size_type capacity, value_type value = value_type()){
+				size_type i = _size + 1;
 
-				resize(capacity);
-				while (i < capacity){
-					_data[i] = value;
-					i++;
+				resize_internal(capacity);
+				if (capacity < _size) {
+					_size = capacity;
+			 	} else {
+					while (i < capacity + 1){
+						_data[i] = value;
+						i++;
+
+					}
+					_size = i - 1;
 				}
 			};
 
@@ -481,7 +486,7 @@ namespace ft{
 
 			vector &operator=(const vector &obj){
 				if (this->_capacity < obj._capacity)
-					this->resize(obj._capacity);
+					this->resize_internal(obj._capacity);
 				this->_size = obj.size();
 				std::memcpy(this->_data, obj._data, this->size());
 				return (*this);

@@ -2,14 +2,11 @@
 
 namespace ft{
 	template<class T>
-	void swap(T o1, T o2){
-		T tmp;
-		
-		tmp = o1;
-		o1 = o2;
-		o2 = tmp;
-	};
-
+	void swap(T &a, T &b) {
+		T tmp(a);
+		a = b;
+		b = tmp;
+	}
 	template<class InputIt1, class InputIt2>
 	 bool lexicographical_compare(InputIt1 first1, InputIt1 last1,
 									InputIt2 first2, InputIt2 last2)
