@@ -1,11 +1,88 @@
 #ifndef __LIST_HPP
 #define __LIST_HPP
 
+#include <limits>
 
 namespace ft{
-
-	template<class T>
+	namespace node{
+		template<typename T>
+		 struct		List
+		{
+			List 		*_prev;
+			T		 	*_value;
+			List 		*_next;
+		};
+	}
+	template<class T, class N>
 	 class ListIterator{
+		public:
+		 	typedef 	T 						value_type;
+	    	typedef 	value_type* 			pointer;
+	    	typedef 	value_type const* 		const_pointer;
+	    	typedef 	value_type& 			reference;
+	    	typedef 	value_type const& 		const_reference;
+	    	typedef 	std::ptrdiff_t 			difference_type;
+			typedef		N						node_type;
+			typedef		node_type*				node_pointer;
+		private:
+		 	node_pointer p;
+
+		public:
+			ListIterator(): p(NULL) {};
+		 	ListIterator(node_pointer p): p(p) {};
+			ListIterator(const ListIterator &obj): p(obj.p) {};
+			~ListIterator() {};
+
+			ListIterator &operator=(const ListIterator &obj) {
+				this->p = obj._FNode;
+				return (*this);
+			};
+			
+			reference operator*(){
+				return (*(this->p->_value));
+			};
+			ListIterator& operator++() {
+				this->_FNode = this->_FNode->_next;
+				return (*this);
+			};
+			ListIterator& operator++(int) {
+				this->_FNode = this->_FNode->_next;
+				return (*this);
+			};
+			ListIterator& operator--() {
+				this->_FNode = this->_FNode->_prev;
+				return (*this);
+			};
+			ListIterator& operator--(int) {
+				this->_FNode = this->_FNode->_prev;
+				return (*this);
+			}
+			pointer operator->(){
+				return (this->p->_value);
+			};
+			bool operator==(const ListIterator& rhs) const {
+				return (this->p->_value == rhs.p->_value);
+			};
+			bool operator!=(const ListIterator& rhs) const {			
+				return (!(*this == rhs));
+			};
+			bool operator>(const ListIterator& rhs) const {
+				return (this->p->_value > rhs.p->_value);
+			};
+			bool operator<(const ListIterator& rhs) const {
+				return (this->p->_value < rhs.p->_value);
+			};
+			bool operator>=(const ListIterator& rhs) const {
+				return (this->p->_value >= rhs.p->_value);
+			};
+			bool operator<=(const ListIterator& rhs) const {
+				return (this->p->_value <= rhs.p->_value);
+			};
+
+			// operator ListIterator<value_type const>() {return (this->p->_value);};
+	};
+	template<class T>
+	 class ReverseListIterator{
 		public:
 		 	typedef 	T 						value_type;
 	    	typedef 	value_type* 			pointer;
@@ -18,107 +95,89 @@ namespace ft{
 		 	pointer p;
 
 		public:
-			VectorIterator(): p(NULL) {};
-		 	VectorIterator(pointer p): p(p) {};
-			VectorIterator(const VectorIterator &obj): p(obj.p) {};
-			~VectorIterator() {};
+			ReverseListIterator(): p(NULL) {};
+		 	ReverseListIterator(pointer p): p(p) {};
+			ReverseListIterator(const ReverseListIterator &obj): p(obj.p) {};
+			~ReverseListIterator() {};
 
-			VectorIterator &operator=(const VectorIterator &obj) {
-				this->p = obj.p;
+			ReverseListIterator &operator=(const ReverseListIterator &obj) {
+				this->p = obj._FNode;
 				return (*this);
 			};
 			
 			reference operator*(){
-				return (*(this->p));
+				return (*(this->p->_value));
 			};
-			VectorIterator& operator++() {
-				(this->p)++;
+			ReverseListIterator& operator++() {
+				this->_FNode = this->_FNode->_prev;
 				return (*this);
 			};
-			VectorIterator& operator++(int) {
-				++this->p;
+			ReverseListIterator& operator++(int) {
+				this->_FNode = this->_FNode->_prev;
 				return (*this);
 			};
-			VectorIterator& operator+=(unsigned int num) {
-				(this->p) = this->p + num;
+			ReverseListIterator& operator--() {
+				this->_FNode = this->_FNode->_next;
 				return (*this);
 			};
-			VectorIterator operator+(unsigned int num) const {
-				return ((VectorIterator(*this)) += num);
-			};
-			VectorIterator& operator--() {
-				(this->p)--;
-				return (*this);
-			};
-			VectorIterator& operator--(int) {
-				--this->p;
+			ReverseListIterator& operator--(int) {
+				this->_FNode = this->_FNode->_next;
 				return (*this);
 			}
-			VectorIterator& operator-=(unsigned int num) {
-				(this->p) = this->p - num;
-				return (*this);
-			};
-			VectorIterator& operator-(unsigned int num) const {
-				return (VectorIterator(*this) -= num);
-			};
-			difference_type operator-(VectorIterator const &obj) const {
-				return (this->p - obj.p);
-			};
 			pointer operator->(){
-				return (this->p);
+				return (this->p->_value);
 			};
-			reference operator[](int num){
-				return (*(this->p + num));
+			bool operator==(const ReverseListIterator& rhs) const {
+				return (this->p->_value == rhs.p->_value);
 			};
-			bool operator==(const VectorIterator& rhs) const {
-				return (this->p == rhs.p);
-			};
-			bool operator!=(const VectorIterator& rhs) const {			
+			bool operator!=(const ReverseListIterator& rhs) const {			
 				return (!(*this == rhs));
 			};
-			bool operator>(const VectorIterator& rhs) const {
-				return (this->p > rhs.p);
+			bool operator>(const ReverseListIterator& rhs) const {
+				return (this->p->_value > rhs.p->_value);
 			};
-			bool operator<(const VectorIterator& rhs) const {
-				return (this->p < rhs.p);
+			bool operator<(const ReverseListIterator& rhs) const {
+				return (this->p->_value < rhs.p->_value);
 			};
-			bool operator>=(const VectorIterator& rhs) const {
-				return (this->p >= rhs.p);
+			bool operator>=(const ReverseListIterator& rhs) const {
+				return (this->p->_value >= rhs.p->_value);
 			};
-			bool operator<=(const VectorIterator& rhs) const {
-				return (this->p <= rhs.p);
+			bool operator<=(const ReverseListIterator& rhs) const {
+				return (this->p->_value <= rhs.p->_value);
 			};
-			
-			operator VectorIterator<value_type const>() {return (this->p);};
-	};
-	template<class T>
-	 class ReverseListIterator{
+
+			operator ReverseListIterator<value_type const>() {return (this->p->_value);};
 	};
 	template<class T>
 	 class list{
 		public:
-			typedef		T 										value_type;//	Тип, представляющий тип данных, хранящихся в векторе.
-			typedef		ListIterator<value_type> 				iterator;//	Тип, предоставляющий итератор произвольного доступа, который может читать или изменять любой элемент в векторе.
-			typedef		ListIterator<value_type const> 			const_iterator;//	Тип, предоставляющий итератор произвольного доступа, который может считывать const элемент в векторе.
-			typedef		ReverseListIterator<value_type> 		reverse_iterator;//	Тип, предоставляющий итератор произвольного доступа, который может читать или изменять любой элемент в обратном векторе.
-			typedef		ReverseListIterator<value_type const> 	const_reverse_iterator;//	Тип, предоставляющий итератор произвольного доступа, который может читать любой const элемент в векторе.
-
-			typedef		T* 										pointer;//	Тип, предоставляющий указатель на элемент в векторе.
-			typedef		T& 										reference;//	Тип, предоставляющий ссылку на элемент, хранящийся в векторе.
-			typedef		T const * 								const_pointer;//	Тип, предоставляющий указатель на const элемент в векторе.
-			typedef		T const & 								const_reference;//	Тип, предоставляющий ссылку на const элемент, хранящийся в векторе. Он используется для чтения и выполнения const операций.
-			typedef		std::ptrdiff_t 							difference_type;//	Тип, представляющий различие между адресами двух элементов в векторе.
-			typedef		unsigned int 							size_type;//	Тип, считающий количество элементов в векторе.
+			typedef		T 										value_type;//				Тип, представляющий тип данных, хранящихся в списке.
 		private:
-			struct		List
-			{
-				List 		*_prev;
-				pointer 	_value;
-				List 		*_next;
-			}			*_FNode;
-			size_type 	_size;
+			typedef		node::List<value_type>					node;//						Тип, предоставляющий node.
+			typedef		node*									node_pointer;//				Тип, предоставлящий указатель на node списка.
 		public:
-			list(): _FNode(NULL), _size(0) {};
+			typedef		ListIterator<value_type, node> 			iterator;//					Тип, предоставляющий итератор произвольного доступа, который может читать или изменять любой элемент в списке.
+			typedef		ListIterator<value_type const, node> 	const_iterator;//			Тип, предоставляющий итератор произвольного доступа, который может считывать const элемент в списке.
+			typedef		ReverseListIterator<value_type> 		reverse_iterator;//			Тип, предоставляющий итератор произвольного доступа, который может читать или изменять любой элемент в обратном списке.
+			typedef		ReverseListIterator<value_type const> 	const_reverse_iterator;//	Тип, предоставляющий итератор произвольного доступа, который может читать любой const элемент в списке.
+
+			typedef		T* 										pointer;//					Тип, предоставляющий указатель на элемент в списке.
+			typedef		T& 										reference;//				Тип, предоставляющий ссылку на элемент, хранящийся в списке.
+			typedef		T const * 								const_pointer;//			Тип, предоставляющий указатель на const элемент в списке.
+			typedef		T const & 								const_reference;//			Тип, предоставляющий ссылку на const элемент, хранящийся в списке. Он используется для чтения и выполнения const операций.
+			typedef		std::ptrdiff_t 							difference_type;//			Тип, представляющий различие между адресами двух элементов в списке.
+			typedef		unsigned int 							size_type;//				Тип, считающий количество элементов в списке.
+		private:
+			// node_pointer				_rbegin_border;
+			// node_pointer				_end_border;
+			node_pointer				_FNode;
+			size_type 					_size;
+
+		public:
+			list(): _FNode(NULL), _size(0) {
+				// _rbegin_border = new node;
+				// _end_border = new node;
+			};
 
 /* 			list(size_type n, const value_type& val = value_type()) {};
 
@@ -131,15 +190,15 @@ namespace ft{
 			
 			void push_back(value_type val) {
 				if (this->empty()){
-					_FNode = new List;
+					_FNode = new node;
 					_FNode->_value = new value_type(val);
 					_FNode->_prev = NULL;
 					_FNode->_next = NULL;
 				} else {
-				List *tmp = _FNode;
-					while (tmp->_next)
+					node_pointer tmp = _FNode;
+					while (tmp->_next !=)
 						tmp = tmp->_next;
-					tmp->_next = new List;
+					tmp->_next = new node;
 					tmp->_next->_value = new value_type(val);
 					tmp->_next->_next = NULL;
 					tmp->_next->_prev = tmp;
@@ -151,8 +210,8 @@ namespace ft{
 				if (this->empty()){
 					push_back(val);
 				} else {
-					List *tmp = _FNode;
-					tmp->_prev = new List;
+					node_pointer tmp = _FNode;
+					tmp->_prev = new node;
 					tmp->_prev->_value = new value_type(val);
 					tmp->_prev->_next = tmp;
 					tmp->_prev->_prev = NULL;
@@ -162,7 +221,7 @@ namespace ft{
 			};
 			void pop_back() {
 				if (!this->empty()) {
-					List *tmp = _FNode;
+					node_pointer tmp = _FNode;
 					while (tmp->_next)
 						tmp = tmp->_next;
 					if (tmp->_prev)
@@ -177,7 +236,7 @@ namespace ft{
 
 			void pop_front() {
 				if (!this->empty()) {
-					List *tmp = _FNode;
+					node_pointer tmp = _FNode;
 					_FNode = tmp->_next;
 					if (_FNode)
 						_FNode->_prev = NULL;
@@ -209,20 +268,20 @@ namespace ft{
 				return (*_FNode->_value);
 			};
 			reference back() {
-				List *tmp = _FNode;
+				node_pointer tmp = _FNode;
 				while (tmp->_next)
 					tmp = tmp->_next;
 				return (*tmp->_value);
 			};
 			const_reference back() const {
-				List *tmp = _FNode;
+				node_pointer tmp = _FNode;
 				while (tmp->_next)
 					tmp = tmp->_next;
 				return (*tmp->_value);
 			};
 
 			iterator begin() {
-				return (iterator(_FNode);
+				return (iterator(_FNode));
 			};
 			const_iterator begin() const {
 				return (const_iterator(_FNode));
@@ -234,13 +293,13 @@ namespace ft{
 				return (NULL);
 			};
 			reverse_iterator rbegin() {
-				List *tmp = _FNode;
+				node_pointer tmp = _FNode;
 				while (tmp->_next)
 					tmp = tmp->_next;
 				return (reverse_iterator(tmp));
 			};
 			const_reverse_iterator rbegin() const {
-				List *tmp = _FNode;
+				node_pointer tmp = _FNode;
 				while (tmp->_next)
 					tmp = tmp->_next;
 				return (const_reverse_iterator(tmp));
@@ -253,20 +312,20 @@ namespace ft{
 			};
 
 			size_type max_size() const {
-				return std::numeric_limits<difference_type>::max() / sizeof(List);
+				return std::numeric_limits<difference_type>::max() / sizeof(node);
 			};
 
 			void resize(size_type n, value_type val = value_type()) {
 				if (n > _size) {
 					for (size_type i = _size; i < n; i++)
 						this->push_back(val);
-				} else if (n < size) {
+				} else if (n < _size) {
 					for (size_type i = _size; i > n; i--)
 						this->pop_back();
 				}
 			};
 
-			void swap(ft::list& x){
+			void swap(list& x){
 				ft::swap(x._FNode, this->_FNode);
 				ft::swap(x._size, this->_size);
 			};

@@ -308,7 +308,7 @@ namespace ft{
 				_size = old_size + i;
 			};
 
-			iterator erase (iterator position){
+			iterator erase(iterator position){
 				iterator it;
 				size_type old_size = _size;
 
@@ -321,7 +321,7 @@ namespace ft{
 				return (it);
 			};
 			
-			iterator erase (iterator first, iterator last){
+			iterator erase(iterator first, iterator last){
 				iterator it;
 				size_type old_size = _size;
 
