@@ -849,10 +849,20 @@ bool	CheckVector(){
 void	CheckList(){
 	ft::list<std::string> tmp;
 	tmp.push_back("10");
+	tmp.push_back("11");
+	tmp.push_back("12");
+	tmp.push_back("13");
+	tmp.push_back("14");
+	tmp.push_back("15");
+	tmp.push_back("16");
+	tmp.push_back("17");
+	tmp.push_back("18");
+	tmp.push_back("19");
 	tmp.push_front("20");
-	ft::list<std::string>::iterator it1 = tmp.begin();
-	while (it1 != tmp.end()){
+	ft::list<std::string>::reverse_iterator it1 = tmp.rbegin();
+	while (it1 != tmp.rend()){
 		std::cout << *it1 << std::endl;
+		it1++;
 	}
 }
 

@@ -42,19 +42,19 @@ namespace ft{
 				return (*(this->p->_value));
 			};
 			ListIterator& operator++() {
-				this->_FNode = this->_FNode->_next;
+				this->p = this->p->_next;
 				return (*this);
 			};
 			ListIterator& operator++(int) {
-				this->_FNode = this->_FNode->_next;
+				this->p = this->p->_next;
 				return (*this);
 			};
 			ListIterator& operator--() {
-				this->_FNode = this->_FNode->_prev;
+				this->p = this->p->_prev;
 				return (*this);
 			};
 			ListIterator& operator--(int) {
-				this->_FNode = this->_FNode->_prev;
+				this->p = this->p->_prev;
 				return (*this);
 			}
 			pointer operator->(){
@@ -81,7 +81,7 @@ namespace ft{
 
 			// operator ListIterator<value_type const>() {return (this->p->_value);};
 	};
-	template<class T>
+	template<class T, class N>
 	 class ReverseListIterator{
 		public:
 		 	typedef 	T 						value_type;
@@ -90,13 +90,14 @@ namespace ft{
 	    	typedef 	value_type& 			reference;
 	    	typedef 	value_type const& 		const_reference;
 	    	typedef 	std::ptrdiff_t 			difference_type;
-
+			typedef		N						node_type;
+			typedef		node_type*				node_pointer;
 		private:
-		 	pointer p;
+		 	node_pointer p;
 
 		public:
 			ReverseListIterator(): p(NULL) {};
-		 	ReverseListIterator(pointer p): p(p) {};
+		 	ReverseListIterator(node_pointer p): p(p) {};
 			ReverseListIterator(const ReverseListIterator &obj): p(obj.p) {};
 			~ReverseListIterator() {};
 
@@ -109,19 +110,19 @@ namespace ft{
 				return (*(this->p->_value));
 			};
 			ReverseListIterator& operator++() {
-				this->_FNode = this->_FNode->_prev;
+				this->p = this->p->_prev;
 				return (*this);
 			};
 			ReverseListIterator& operator++(int) {
-				this->_FNode = this->_FNode->_prev;
+				this->p = this->p->_prev;
 				return (*this);
 			};
 			ReverseListIterator& operator--() {
-				this->_FNode = this->_FNode->_next;
+				this->p = this->p->_next;
 				return (*this);
 			};
 			ReverseListIterator& operator--(int) {
-				this->_FNode = this->_FNode->_next;
+				this->p = this->p->_next;
 				return (*this);
 			}
 			pointer operator->(){
@@ -146,37 +147,37 @@ namespace ft{
 				return (this->p->_value <= rhs.p->_value);
 			};
 
-			operator ReverseListIterator<value_type const>() {return (this->p->_value);};
+			// operator ReverseListIterator<value_type const>() {return (this->p->_value);};
 	};
 	template<class T>
 	 class list{
 		public:
-			typedef		T 										value_type;//				Тип, представляющий тип данных, хранящихся в списке.
+			typedef		T 												value_type;//				Тип, представляющий тип данных, хранящихся в списке.
 		private:
-			typedef		node::List<value_type>					node;//						Тип, предоставляющий node.
-			typedef		node*									node_pointer;//				Тип, предоставлящий указатель на node списка.
+			typedef		node::List<value_type>							node;//						Тип, предоставляющий node.
+			typedef		node*											node_pointer;//				Тип, предоставлящий указатель на node списка.
 		public:
-			typedef		ListIterator<value_type, node> 			iterator;//					Тип, предоставляющий итератор произвольного доступа, который может читать или изменять любой элемент в списке.
-			typedef		ListIterator<value_type const, node> 	const_iterator;//			Тип, предоставляющий итератор произвольного доступа, который может считывать const элемент в списке.
-			typedef		ReverseListIterator<value_type> 		reverse_iterator;//			Тип, предоставляющий итератор произвольного доступа, который может читать или изменять любой элемент в обратном списке.
-			typedef		ReverseListIterator<value_type const> 	const_reverse_iterator;//	Тип, предоставляющий итератор произвольного доступа, который может читать любой const элемент в списке.
+			typedef		ListIterator<value_type, node> 					iterator;//					Тип, предоставляющий итератор произвольного доступа, который может читать или изменять любой элемент в списке.
+			typedef		ListIterator<value_type const, node> 			const_iterator;//			Тип, предоставляющий итератор произвольного доступа, который может считывать const элемент в списке.
+			typedef		ReverseListIterator<value_type, node> 			reverse_iterator;//			Тип, предоставляющий итератор произвольного доступа, который может читать или изменять любой элемент в обратном списке.
+			typedef		ReverseListIterator<value_type const, node> 	const_reverse_iterator;//	Тип, предоставляющий итератор произвольного доступа, который может читать любой const элемент в списке.
 
-			typedef		T* 										pointer;//					Тип, предоставляющий указатель на элемент в списке.
-			typedef		T& 										reference;//				Тип, предоставляющий ссылку на элемент, хранящийся в списке.
-			typedef		T const * 								const_pointer;//			Тип, предоставляющий указатель на const элемент в списке.
-			typedef		T const & 								const_reference;//			Тип, предоставляющий ссылку на const элемент, хранящийся в списке. Он используется для чтения и выполнения const операций.
-			typedef		std::ptrdiff_t 							difference_type;//			Тип, представляющий различие между адресами двух элементов в списке.
-			typedef		unsigned int 							size_type;//				Тип, считающий количество элементов в списке.
+			typedef		T* 												pointer;//					Тип, предоставляющий указатель на элемент в списке.
+			typedef		T& 												reference;//				Тип, предоставляющий ссылку на элемент, хранящийся в списке.
+			typedef		T const * 										const_pointer;//			Тип, предоставляющий указатель на const элемент в списке.
+			typedef		T const & 										const_reference;//			Тип, предоставляющий ссылку на const элемент, хранящийся в списке. Он используется для чтения и выполнения const операций.
+			typedef		std::ptrdiff_t 									difference_type;//			Тип, представляющий различие между адресами двух элементов в списке.
+			typedef		unsigned int 									size_type;//				Тип, считающий количество элементов в списке.
 		private:
-			// node_pointer				_rbegin_border;
-			// node_pointer				_end_border;
+			node_pointer				_rend_border;
+			node_pointer				_end_border;
 			node_pointer				_FNode;
 			size_type 					_size;
 
 		public:
 			list(): _FNode(NULL), _size(0) {
-				// _rbegin_border = new node;
-				// _end_border = new node;
+				_rend_border = new node;
+				_end_border = new node;
 			};
 
 /* 			list(size_type n, const value_type& val = value_type()) {};
@@ -192,15 +193,15 @@ namespace ft{
 				if (this->empty()){
 					_FNode = new node;
 					_FNode->_value = new value_type(val);
-					_FNode->_prev = NULL;
-					_FNode->_next = NULL;
+					_FNode->_prev = _rend_border;
+					_FNode->_next = _end_border;
 				} else {
 					node_pointer tmp = _FNode;
-					while (tmp->_next !=)
+					while (tmp->_next != _end_border)
 						tmp = tmp->_next;
 					tmp->_next = new node;
 					tmp->_next->_value = new value_type(val);
-					tmp->_next->_next = NULL;
+					tmp->_next->_next = _end_border;
 					tmp->_next->_prev = tmp;
 				}
 				_size++;
@@ -214,7 +215,7 @@ namespace ft{
 					tmp->_prev = new node;
 					tmp->_prev->_value = new value_type(val);
 					tmp->_prev->_next = tmp;
-					tmp->_prev->_prev = NULL;
+					tmp->_prev->_prev = _rend_border;
 					_FNode = tmp->_prev;
 					_size++;
 				}
@@ -222,10 +223,10 @@ namespace ft{
 			void pop_back() {
 				if (!this->empty()) {
 					node_pointer tmp = _FNode;
-					while (tmp->_next)
+					while (tmp->_next != _end_border)
 						tmp = tmp->_next;
 					if (tmp->_prev)
-						tmp->_prev->_next = NULL;
+						tmp->_prev->_next = _end_border;
 					tmp->_value->~value_type();
 					delete tmp;
 					_size--;
@@ -239,7 +240,7 @@ namespace ft{
 					node_pointer tmp = _FNode;
 					_FNode = tmp->_next;
 					if (_FNode)
-						_FNode->_prev = NULL;
+						_FNode->_prev = _rend_border;
 					tmp->_value->~value_type();
 					delete tmp;
 					_size--;
@@ -287,28 +288,28 @@ namespace ft{
 				return (const_iterator(_FNode));
 			};
 			iterator end() {
-				return (NULL);
+				return (_end_border);
 			};
 			const_iterator end() const {
-				return (NULL);
+				return (_end_border);
 			};
 			reverse_iterator rbegin() {
 				node_pointer tmp = _FNode;
-				while (tmp->_next)
+				while (tmp->_next != _end_border)
 					tmp = tmp->_next;
 				return (reverse_iterator(tmp));
 			};
 			const_reverse_iterator rbegin() const {
 				node_pointer tmp = _FNode;
-				while (tmp->_next)
+				while (tmp->_next != _end_border)
 					tmp = tmp->_next;
 				return (const_reverse_iterator(tmp));
 			};
 			reverse_iterator rend() {
-				return (NULL);
+				return (_rend_border);
 			};
 			const_reverse_iterator rend() const {
-				return (NULL);
+				return (_rend_border);
 			};
 
 			size_type max_size() const {
