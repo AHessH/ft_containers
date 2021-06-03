@@ -2,6 +2,7 @@
 #include "List.hpp"
 #include <iostream>
 #include <vector>
+#include <list>
 #include <string>
 
 #define PRINT_DOUBLE_TAB (std::cout << "\t\t");
@@ -855,7 +856,8 @@ void	CheckList(){
 	std::cout << tmp.front() << std::endl;
 	tmp.pop_back();
 	std::cout << tmp.front() << std::endl;
-
+	std::list<int> mylist(myints,myints+5)1;
+	std::list<int>::
 
 }
 

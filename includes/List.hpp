@@ -201,21 +201,19 @@ namespace ft{
 				while (_FNode != NULL)
 					pop_back();
 			};
+
 			reference front() {
 				return (*_FNode->_value);
 			};
-
 			const_reference front() const {
 				return (*_FNode->_value);
 			};
-
 			reference back() {
 				List *tmp = _FNode;
 				while (tmp->_next)
 					tmp = tmp->_next;
 				return (*tmp->_value);
 			};
-
 			const_reference back() const {
 				List *tmp = _FNode;
 				while (tmp->_next)
@@ -226,19 +224,52 @@ namespace ft{
 			iterator begin() {
 				return (iterator(_FNode);
 			};
-
 			const_iterator begin() const {
 				return (const_iterator(_FNode));
 			};
-			
 			iterator end() {
 				return (NULL);
 			};
-
 			const_iterator end() const {
 				return (NULL);
 			};
-		//NOTE: Подумать над тем чтобы сделать границы для rend и end
+			reverse_iterator rbegin() {
+				List *tmp = _FNode;
+				while (tmp->_next)
+					tmp = tmp->_next;
+				return (reverse_iterator(tmp));
+			};
+			const_reverse_iterator rbegin() const {
+				List *tmp = _FNode;
+				while (tmp->_next)
+					tmp = tmp->_next;
+				return (const_reverse_iterator(tmp));
+			};
+			reverse_iterator rend() {
+				return (NULL);
+			};
+			const_reverse_iterator rend() const {
+				return (NULL);
+			};
+
+			size_type max_size() const {
+				return std::numeric_limits<difference_type>::max() / sizeof(List);
+			};
+
+			void resize(size_type n, value_type val = value_type()) {
+				if (n > _size) {
+					for (size_type i = _size; i < n; i++)
+						this->push_back(val);
+				} else if (n < size) {
+					for (size_type i = _size; i > n; i--)
+						this->pop_back();
+				}
+			};
+
+			void swap(ft::list& x){
+				ft::swap(x._FNode, this->_FNode);
+				ft::swap(x._size, this->_size);
+			};
 	};
 
 }
