@@ -34,7 +34,7 @@ namespace ft{
 			~ListIterator() {};
 
 			ListIterator &operator=(const ListIterator &obj) {
-				this->p = obj._FNode;
+				this->p = obj.p;
 				return (*this);
 			};
 			
@@ -173,6 +173,25 @@ namespace ft{
 			node_pointer				_end_border;
 			node_pointer				_FNode;
 			size_type 					_size;
+			void delete_elem(node_pointer point) {
+				node_pointer tmp = point->_next;
+				point->_prev->_next = tmp;
+				tmp->_prev = point->_prev;
+				point->_value->~value_type();
+				delete point;
+				--_size;
+			};
+			void add_elem(node_pointer &point, reference val) {
+				node_pointer tmp = point->_next;
+				std::cout << point->_next << std::endl;
+				point->_next = new node;
+				point->_next->_prev = point;
+				point->_next->_next = tmp;
+				point->_next->_value = new value_type(val);
+				std::cout << "HI\n";
+				tmp->_prev = point->_next;
+				std::cout << "HI\n";
+			}
 
 		public:
 			list(): _FNode(NULL), _size(0) {
@@ -188,7 +207,7 @@ namespace ft{
 			list(const list& x){
 				*this = x;
 			}; */
-			
+
 			void push_back(value_type val) {
 				if (this->empty()){
 					_FNode = new node;
@@ -287,11 +306,11 @@ namespace ft{
 			const_iterator begin() const {
 				return (const_iterator(_FNode));
 			};
-			iterator end() {
-				return (_end_border);
+			iterator end() { //TODO: проблема с end сегфолт
+				return (iterator(_end_border));
 			};
 			const_iterator end() const {
-				return (_end_border);
+				return (const_iterator(_end_border));
 			};
 			reverse_iterator rbegin() {
 				node_pointer tmp = _FNode;
@@ -330,6 +349,109 @@ namespace ft{
 				ft::swap(x._FNode, this->_FNode);
 				ft::swap(x._size, this->_size);
 			};
+
+			template <class InputIterator>
+			 void assign(InputIterator first, InputIterator last) {
+				this->clear();
+				for (; first != last; first++) {
+					this->push_back(*first);
+				}
+			};
+			void assign(size_type n, const_reference val) {
+				this->clear();
+				for (size_type i = 0; i < n; i++) {
+					this->push_back(val);
+				}
+			};
+
+			iterator insert(iterator position, const_reference val) {
+				node_pointer insert_position = _FNode;
+				while (insert_position->_next != position)
+					insert_position= insert_position->_next;
+				node_pointer tmp = insert_position->_next;
+				insert_position->_next = new node;
+				insert_position->_next->_value = new value_type(val);
+				insert_position->_next->_next = tmp;
+				insert_position->_next->_prev = insert_position;
+				tmp->_prev = insert_position->_next;
+				_size++;
+				
+			};
+    		void insert(iterator position, size_type n, const_reference val) {
+				for (size_type i = 0; i < n; i++) {
+					this->insert(position, val);
+				}
+			};
+			template <class InputIterator>
+    		 void insert(iterator position, InputIterator first, InputIterator last) {
+				for (;first != last; first++) {
+					this->insert(position, *first);
+					position++;
+				}
+			};
+
+			iterator erase(iterator position) {
+				node_pointer tmp = _FNode;
+				iterator it1 = this->begin();
+				while (it1 != position) {
+					tmp = tmp->_next;
+					it1++;
+				}
+				it1++;
+				if (tmp == _FNode){
+					_FNode = tmp->_next;
+				}
+				if (_size != 0) {
+					delete_elem(tmp);
+				}
+				return (it1);
+			};
+			iterator erase(iterator first, iterator last) {
+				iterator it1;
+				for (;first != last; first++){
+					it1 = this->erase(first);
+				}
+				return (it1);
+			};
+
+			void remove(const_reference val) {
+				for (node_pointer tmp = _FNode; tmp != _end_border; tmp = tmp->_next) {
+					if (tmp == _FNode && *_FNode->_value == val)
+						_FNode = tmp->_next;
+					if (*tmp->_value == val) {
+						delete_elem(tmp);
+					}
+				}
+			};
+			template <class Predicate>
+             void remove_if (Predicate pred) {
+				for (pointer tmp = _FNode; tmp != _end_border; tmp = tmp->next) {
+					if (pred(*tmp->_value))
+						delete_elem(tmp);
+				}
+			};
+			
+			void splice (iterator position, list& x){
+				node_pointer tmp = _FNode;
+				for (iterator i = this->begin(); i != position; i++) {
+					tmp = tmp->_next;
+				}
+				tmp = tmp->_prev;
+
+				while (x.size()) {
+					add_elem(tmp, *x._FNode->_value);
+					x.pop_front();
+					if (tmp == _FNode)
+						_FNode = tmp;
+				}
+
+			};
+			// void splice (iterator position, list& x, iterator i) {
+
+			// };
+			// void splice (iterator position, list& x, iterator first, iterator last) {
+
+			// };
 	};
 
 }
