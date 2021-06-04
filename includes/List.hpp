@@ -183,14 +183,11 @@ namespace ft{
 			};
 			void add_elem(node_pointer &point, reference val) {
 				node_pointer tmp = point->_next;
-				std::cout << point->_next << std::endl;
 				point->_next = new node;
 				point->_next->_prev = point;
 				point->_next->_next = tmp;
 				point->_next->_value = new value_type(val);
-				std::cout << "HI\n";
 				tmp->_prev = point->_next;
-				std::cout << "HI\n";
 			}
 
 		public:
@@ -213,7 +210,9 @@ namespace ft{
 					_FNode = new node;
 					_FNode->_value = new value_type(val);
 					_FNode->_prev = _rend_border;
+					_rend_border->_next = _FNode;
 					_FNode->_next = _end_border;
+					_end_border->_prev = _FNode;
 				} else {
 					node_pointer tmp = _FNode;
 					while (tmp->_next != _end_border)
@@ -222,6 +221,7 @@ namespace ft{
 					tmp->_next->_value = new value_type(val);
 					tmp->_next->_next = _end_border;
 					tmp->_next->_prev = tmp;
+					_end_border->_prev = tmp->_next;
 				}
 				_size++;
 			};
@@ -235,6 +235,7 @@ namespace ft{
 					tmp->_prev->_value = new value_type(val);
 					tmp->_prev->_next = tmp;
 					tmp->_prev->_prev = _rend_border;
+					_rend_border->_next = _FNode;
 					_FNode = tmp->_prev;
 					_size++;
 				}
@@ -437,21 +438,31 @@ namespace ft{
 					tmp = tmp->_next;
 				}
 				tmp = tmp->_prev;
-
-				while (x.size()) {
+				for (;x.size(); tmp = tmp->_next) {
 					add_elem(tmp, *x._FNode->_value);
+					if (tmp == _rend_border){
+						_FNode = tmp->_next;
+					}
 					x.pop_front();
-					if (tmp == _FNode)
-						_FNode = tmp;
 				}
-
 			};
-			// void splice (iterator position, list& x, iterator i) {
-
-			// };
-			// void splice (iterator position, list& x, iterator first, iterator last) {
-
-			// };
+			void splice (iterator position, list& x, iterator i) {
+				node_pointer tmp = _FNode;
+				for (iterator i = this->begin(); i != position; i++) {
+					tmp = tmp->_next;
+				}
+				tmp = tmp->_prev;
+				add_elem(tmp, *i);
+				if (tmp == _rend_border) {
+					_FNode = tmp->_next;
+				}
+				x.erase(i);
+			};
+			void splice (iterator position, list& x, iterator first, iterator last) {
+				for (;first != last; first++) {
+					this->splice(position, x, first);
+				}
+			};
 	};
 
 }

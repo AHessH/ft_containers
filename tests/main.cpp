@@ -851,7 +851,16 @@ void	CheckList(){
 	ft::list<std::string> tmp1;
 	tmp1.push_back("101");
 	tmp1.push_back("102");
+	tmp1.push_back("103");
+	ft::list<std::string>::iterator it2 = tmp1.begin();
+	it2++;
+	// it2++;
+	// it2++;
 
+	// while (it2 != tmp.end()){
+	// 	std::cout << *it2 << std::endl;
+	// 	it2++;
+	// }
 	tmp.push_back("10");
 	tmp.push_back("11");
 	// tmp.push_back("12");
@@ -867,7 +876,7 @@ void	CheckList(){
 	// it++;
 	// it++;
 	// ft::list<std::string>::iterator it2 = tmp.end();
-	tmp.splice(tmp.begin(), tmp1);
+	tmp.splice(tmp.begin(), tmp1, tmp1.begin(),it2);
 	ft::list<std::string>::iterator it1 = tmp.begin();
 	while (it1 != tmp.end()){
 		std::cout << *it1 << std::endl;
