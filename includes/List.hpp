@@ -196,14 +196,23 @@ namespace ft{
 				_end_border = new node;
 			};
 
-/* 			list(size_type n, const value_type& val = value_type()) {};
+			list(size_type n, const value_type& val = value_type()) {
+				this->assign(n, val);
+			};
 
 			template <class InputIterator>
-			 list(InputIterator first, InputIterator last) {};
+			 list(InputIterator first, InputIterator last) {
+				this->assign(first, last);
+			};
 
 			list(const list& x){
 				*this = x;
-			}; */
+			};
+			~list() {
+				this->clear();
+				delete this->_end_border;
+				delete this->_rend_border;
+			};
 
 			void push_back(value_type val) {
 				if (this->empty()){
