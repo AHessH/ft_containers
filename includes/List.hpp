@@ -250,8 +250,11 @@ namespace ft{
 					tmp->_value->~value_type();
 					delete tmp;
 					_size--;
-					if (_size == 0)
+					if (_size == 0) {
 						_FNode = NULL;
+						_end_border->prev = NULL;
+						_rend_border->_next = NULL;
+					}
 				}
 			};
 
@@ -261,11 +264,15 @@ namespace ft{
 					_FNode = tmp->_next;
 					if (_FNode)
 						_FNode->_prev = _rend_border;
+					_rend_border->_next = _FNode;
 					tmp->_value->~value_type();
 					delete tmp;
 					_size--;
-					if (_size == 0)
+					if (_size == 0) {
 						_FNode = NULL;
+						_end_border->prev = NULL;
+						_rend_border->_next = NULL;
+					}
 				}
 			};
 
@@ -425,14 +432,14 @@ namespace ft{
 				}
 			};
 			template <class Predicate>
-             void remove_if (Predicate pred) {
+             void remove_if(Predicate pred) {
 				for (pointer tmp = _FNode; tmp != _end_border; tmp = tmp->next) {
 					if (pred(*tmp->_value))
 						delete_elem(tmp);
 				}
 			};
 			
-			void splice (iterator position, list& x){
+			void splice(iterator position, list& x) { // TODO: исправить метод должен вырезать node из другого
 				node_pointer tmp = _FNode;
 				for (iterator i = this->begin(); i != position; i++) {
 					tmp = tmp->_next;
@@ -446,7 +453,7 @@ namespace ft{
 					x.pop_front();
 				}
 			};
-			void splice (iterator position, list& x, iterator i) {
+			void splice(iterator position, list& x, iterator i) {
 				node_pointer tmp = _FNode;
 				for (iterator i = this->begin(); i != position; i++) {
 					tmp = tmp->_next;
@@ -458,9 +465,64 @@ namespace ft{
 				}
 				x.erase(i);
 			};
-			void splice (iterator position, list& x, iterator first, iterator last) {
+			void splice(iterator position, list& x, iterator first, iterator last) {
 				for (;first != last; first++) {
 					this->splice(position, x, first);
+				}
+			};
+
+			void unique() {
+				for (node_pointer tmp = _rend_border; tmp != _end_border; tmp = tmp->_next) {
+					if (tmp->_next->_value && tmp->_value && *tmp->_value == *tmp->_next->_value){
+						this->erase(iterator(tmp));
+					}
+				}
+			};
+			template <class BinaryPredicate>
+			 void unique (BinaryPredicate binary_pred) {
+				for (node_pointer tmp = _rend_border; tmp != _end_border; tmp = tmp->_next) {
+					if (tmp->_next->_value && tmp->_value && binary_pred(iterator(tmp->_next), iterator(tmp)))
+						this->erase(iterator(tmp));
+					}
+			};
+
+			// void merge(list& x) { // TODO: исправить метод должен вырезать node из другого
+			// 	if (&x == this)
+			// 		return ;
+			// 	node_pointer x_pointer = &x;
+			// 	node_pointer this_pointer = this;
+
+			// };
+			// template <class Compare>
+			//  void merge(list& x, Compare comp) {
+
+			// };
+			
+			void sort() {
+				for (node_pointer x = this->_FNode; x != _end_border->_prev; x = x->_next) {
+					for (node_pointer y = x; y != _end_border; y = y->_next) {
+						if (*y->_value < *x->_value) {
+							ft::swap(x->_value, y->_value);
+						}
+					}
+				}
+			};
+			template <class Compare>
+			 void sort(Compare comp) {
+				for (node_pointer x = this->_FNode; x != _end_border->_prev; x = x->_next) {
+					for (node_pointer y = x; y != _end_border; y = y->_next) {
+						if (comp(*y->_value, *x->_value)) {
+							ft::swap(x->_value, y->_value);
+						}
+					}
+				}
+			};
+
+			void reverse() {
+				node_pointer x = this->_FNode;
+				node_pointer y = this->_end_border->_prev;
+				for (size_type i = 0; i < this->size() / 2; x = x->_next, y = y->_prev, i++) {
+					ft::swap(x->_value, y->_value);
 				}
 			};
 	};

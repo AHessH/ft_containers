@@ -847,22 +847,19 @@ bool	CheckVector(){
 }
 
 void	CheckList(){
-	ft::list<std::string> tmp;
-	ft::list<std::string> tmp1;
-	tmp1.push_back("101");
-	tmp1.push_back("102");
-	tmp1.push_back("103");
-	ft::list<std::string>::iterator it2 = tmp1.begin();
-	it2++;
-	// it2++;
-	// it2++;
-
+	ft::list<int> tmp;
 	// while (it2 != tmp.end()){
-	// 	std::cout << *it2 << std::endl;
+	// 	cout << *it2 << endl;
 	// 	it2++;
 	// }
-	tmp.push_back("10");
-	tmp.push_back("11");
+	tmp.push_back(9);
+	tmp.push_back(1445);
+	tmp.push_back(2);
+	tmp.push_back(7);
+	tmp.push_back(2345);
+	tmp.push_back(1445);
+	tmp.push_back(645);
+
 	// tmp.push_back("12");
 	// tmp.push_back("13");
 	// tmp.push_back("14");
@@ -870,14 +867,17 @@ void	CheckList(){
 	// tmp.push_back("16");
 	// tmp.push_back("17");
 	// tmp.push_back("18");
-	tmp.push_back("19");
+
 	// tmp.push_front("20");
-	// ft::list<std::string>::iterator it = tmp.begin();
+	// ft::list<int>::iterator it = tmp.begin();
 	// it++;
 	// it++;
-	// ft::list<std::string>::iterator it2 = tmp.end();
-	tmp.splice(tmp.begin(), tmp1, tmp1.begin(),it2);
-	ft::list<std::string>::iterator it1 = tmp.begin();
+	// ft::list<int>::iterator it2 = tmp.end();
+	// tmp.splice(tmp.begin(), tmp1, tmp1.begin(),it2);
+	tmp.sort();
+	tmp.reverse();
+	ft::list<int>::iterator it1 = tmp.begin();
+	std::cout << "size = " << tmp.size() << std::endl;
 	while (it1 != tmp.end()){
 		std::cout << *it1 << std::endl;
 		it1++;
