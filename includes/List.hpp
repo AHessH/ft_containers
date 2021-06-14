@@ -189,34 +189,30 @@ namespace ft{
 				point->_next->_value = new value_type(val);
 				tmp->_prev = point->_next;
 			};
-			node_pointer cut_elem(node_pointer &point, list &list) {
+			node_pointer cut_elem(node_pointer &point) {
 				node_pointer tmp = point;
+				if (point == this->_FNode) {
+					this->_FNode = tmp->_next;
+				}
 				tmp->_prev->_next = tmp->_next;
 				tmp->_next->_prev = tmp->_prev;
 				tmp->_next = NULL;
 				tmp->_prev = NULL;
-				if (point == _FNode) {
-					_FNode = tmp;
-				}
-				list._size--;
+				this->_size--;
 				return (tmp);
 			};
-			void paste_elem(node_pointer &point, iterator position) {
-				node_pointer pos = point;
+			void paste_elem(node_pointer &point, iterator &position, list &list) {
+				node_pointer pos = this->_FNode;
 				iterator iter = this->begin();
 				while (iter != position){
 					iter++;
 					pos = pos->_next;
 				}
+				this->_size++;
 				point->_next = pos;
 				point->_prev = pos->_prev;
-
-					// std::cout << "hi1" << std::endl;
-				// std::cout << "pos = " << *pos << std::endl;
 				pos->_prev->_next = point;
-					// std::cout << "hi2" << std::endl;
 				pos->_prev = point;
-					// std::cout << "hi3" << std::endl;
 			};
 
 		public:
@@ -477,41 +473,42 @@ namespace ft{
 				}
 			};
 			
-			void splice(iterator position, list& x) { // TODO: исправить метод должен вырезать node из другого
-				node_pointer tmp = _FNode;
+			void splice(iterator position, list& x) {
+				node_pointer tmp = this->_FNode;
 				for (iterator i = this->begin(); i != position; i++) {
 					tmp = tmp->_next;
 				}
 				tmp = tmp->_prev;
-				for (;x.size();) {
-					// std::cout << "hi" << std::endl;
-
-					paste_elem(x._FNode, position);
-					// std::cout << "hi" << std::endl;
+				while (x.size()) {
+					node_pointer asd = x.cut_elem(x._FNode);
+					this->paste_elem(asd, position, x);
 					if (tmp == _rend_border){
 						_FNode = tmp->_next;
 					}
-					position++;
-					std::cout << "hi1" << std::endl;
-
-					// x.cut_elem(x._FNode, x);
 				}
 			};
 			void splice(iterator position, list& x, iterator i) {
-				node_pointer tmp = _FNode;
-				for (iterator i = this->begin(); i != position; i++) {
+				node_pointer tmp = this->_FNode;
+				for (iterator it = this->begin(); it != position; it++) {
 					tmp = tmp->_next;
 				}
 				tmp = tmp->_prev;
-				add_elem(tmp, *i);
-				if (tmp == _rend_border) {
+				node_pointer cut = x._FNode;
+				for (iterator j = x.begin(); j != i; j++) {
+					cut = cut->_next;
+				}
+				node_pointer asd = x.cut_elem(cut);
+				this->paste_elem(asd, position, x);
+				if (tmp == _rend_border){
 					_FNode = tmp->_next;
 				}
-				x.erase(i);
 			};
 			void splice(iterator position, list& x, iterator first, iterator last) {
-				for (;first != last; first++) {
+				for (;first != last;) {
+					iterator tmp = first;
+					tmp++;
 					this->splice(position, x, first);
+					first = tmp;
 				}
 			};
 

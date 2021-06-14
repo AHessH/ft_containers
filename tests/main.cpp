@@ -847,23 +847,22 @@ bool	CheckVector(){
 }
 
 void	CheckList(){
-	ft::list<int> tmp;
-	ft::list<int> tmp2;
+	std::list<int> tmp;
+	std::list<int> tmp2;
 
 	// while (it2 != tmp.end()){
 	// 	cout << *it2 << endl;
 	// 	it2++;
 	// }
-	tmp.push_back(9);
-	tmp.push_back(1445);
+	tmp.push_back(1);
 	tmp.push_back(2);
-	tmp.push_back(7);
-	tmp.push_back(2345);
-	tmp.push_back(1445);
-	tmp.push_back(645);
-	tmp2.push_back(0);
-	tmp2.push_back(0);
-	tmp2.push_back(0);
+	tmp.push_back(3);
+	tmp.push_back(4);
+	tmp.push_back(5);
+	tmp.push_back(6);
+	tmp2.push_back(10);
+	tmp2.push_back(2);
+	tmp2.push_back(11);
 
 	// tmp.push_back("12");
 	// tmp.push_back("13");
@@ -874,16 +873,15 @@ void	CheckList(){
 	// tmp.push_back("18");
 
 	// tmp.push_front("20");
-	// ft::list<int>::iterator it = tmp.begin();
-	// it++;
-	// it++;
-	// ft::list<int>::iterator it2 = tmp.end();
-	tmp.splice(tmp.begin(),tmp2);
+	std::list<int>::iterator it = tmp2.begin();
+	it++;
+	it++;
+	// std::list<int>::iterator it2 = tmp.end();
+	tmp.merge(tmp2);
 	// tmp.sort();
 	// tmp.reverse();
-	std::cout << "hi1" << std::endl;
 
-	ft::list<int>::iterator it1 = tmp.begin();
+	std::list<int>::iterator it1 = tmp.begin();
 	std::cout << "size = " << tmp.size() << std::endl;
 	while (it1 != tmp.end()){
 		std::cout << *it1 << std::endl;
