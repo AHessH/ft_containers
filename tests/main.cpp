@@ -848,6 +848,8 @@ bool	CheckVector(){
 
 void	CheckList(){
 	ft::list<int> tmp;
+	ft::list<int> tmp2;
+
 	// while (it2 != tmp.end()){
 	// 	cout << *it2 << endl;
 	// 	it2++;
@@ -859,6 +861,9 @@ void	CheckList(){
 	tmp.push_back(2345);
 	tmp.push_back(1445);
 	tmp.push_back(645);
+	tmp2.push_back(0);
+	tmp2.push_back(0);
+	tmp2.push_back(0);
 
 	// tmp.push_back("12");
 	// tmp.push_back("13");
@@ -873,9 +878,11 @@ void	CheckList(){
 	// it++;
 	// it++;
 	// ft::list<int>::iterator it2 = tmp.end();
-	// tmp.splice(tmp.begin(), tmp1, tmp1.begin(),it2);
-	tmp.sort();
-	tmp.reverse();
+	tmp.splice(tmp.begin(),tmp2);
+	// tmp.sort();
+	// tmp.reverse();
+	std::cout << "hi1" << std::endl;
+
 	ft::list<int>::iterator it1 = tmp.begin();
 	std::cout << "size = " << tmp.size() << std::endl;
 	while (it1 != tmp.end()){

@@ -188,7 +188,36 @@ namespace ft{
 				point->_next->_next = tmp;
 				point->_next->_value = new value_type(val);
 				tmp->_prev = point->_next;
-			}
+			};
+			node_pointer cut_elem(node_pointer &point, list &list) {
+				node_pointer tmp = point;
+				tmp->_prev->_next = tmp->_next;
+				tmp->_next->_prev = tmp->_prev;
+				tmp->_next = NULL;
+				tmp->_prev = NULL;
+				if (point == _FNode) {
+					_FNode = tmp;
+				}
+				list._size--;
+				return (tmp);
+			};
+			void paste_elem(node_pointer &point, iterator position) {
+				node_pointer pos = point;
+				iterator iter = this->begin();
+				while (iter != position){
+					iter++;
+					pos = pos->_next;
+				}
+				point->_next = pos;
+				point->_prev = pos->_prev;
+
+					// std::cout << "hi1" << std::endl;
+				// std::cout << "pos = " << *pos << std::endl;
+				pos->_prev->_next = point;
+					// std::cout << "hi2" << std::endl;
+				pos->_prev = point;
+					// std::cout << "hi3" << std::endl;
+			};
 
 		public:
 			list(): _FNode(NULL), _size(0) {
@@ -261,7 +290,7 @@ namespace ft{
 					_size--;
 					if (_size == 0) {
 						_FNode = NULL;
-						_end_border->prev = NULL;
+						_end_border->_prev = NULL;
 						_rend_border->_next = NULL;
 					}
 				}
@@ -454,12 +483,18 @@ namespace ft{
 					tmp = tmp->_next;
 				}
 				tmp = tmp->_prev;
-				for (;x.size(); tmp = tmp->_next) {
-					add_elem(tmp, *x._FNode->_value);
+				for (;x.size();) {
+					// std::cout << "hi" << std::endl;
+
+					paste_elem(x._FNode, position);
+					// std::cout << "hi" << std::endl;
 					if (tmp == _rend_border){
 						_FNode = tmp->_next;
 					}
-					x.pop_front();
+					position++;
+					std::cout << "hi1" << std::endl;
+
+					// x.cut_elem(x._FNode, x);
 				}
 			};
 			void splice(iterator position, list& x, iterator i) {
