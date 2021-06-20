@@ -42,8 +42,9 @@ namespace ft{
 				return (*this);
 			};
 			VectorIterator& operator++(int) {
+				VectorIterator tmp = *this;
 				++this->p;
-				return (*this);
+				return (tmp);
 			};
 			VectorIterator& operator+=(unsigned int num) {
 				(this->p) = this->p + num;
@@ -57,8 +58,9 @@ namespace ft{
 				return (*this);
 			};
 			VectorIterator& operator--(int) {
+				ListIterator tmp = *this;
 				--this->p;
-				return (*this);
+				return (tmp);
 			}
 			VectorIterator& operator-=(unsigned int num) {
 				(this->p) = this->p - num;
@@ -99,7 +101,7 @@ namespace ft{
 	};
 	template<class T>
 	 class ReverseIterator{
-		 		public:
+		public:
 		 	typedef 	T 						value_type;
 	    	typedef 	value_type* 			pointer;
 	    	typedef 	value_type const* 		const_pointer;
@@ -129,8 +131,9 @@ namespace ft{
 				return (*this);
 			};
 			ReverseIterator& operator++(int) {
+				ListIterator tmp = *this;
 				--this->p;
-				return (*this);
+				return (tmp);
 			};
 			ReverseIterator& operator+=(unsigned int num) {
 				(this->p) = this->p - num;
@@ -144,8 +147,9 @@ namespace ft{
 				return (*this);
 			};
 			ReverseIterator& operator--(int) {
+				ListIterator tmp = *this;
 				++this->p;
-				return (*this);
+				return (*tmp);
 			}
 			ReverseIterator& operator-=(unsigned int num) {
 				(this->p) = this->p + num;

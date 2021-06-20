@@ -46,16 +46,18 @@ namespace ft{
 				return (*this);
 			};
 			ListIterator& operator++(int) {
+				ListIterator tmp = *this;
 				this->p = this->p->_next;
-				return (*this);
+				return (tmp);
 			};
 			ListIterator& operator--() {
 				this->p = this->p->_prev;
 				return (*this);
 			};
 			ListIterator& operator--(int) {
+				ListIterator tmp = *this;
 				this->p = this->p->_prev;
-				return (*this);
+				return (tmp);
 			}
 			pointer operator->(){
 				return (this->p->_value);
@@ -114,16 +116,18 @@ namespace ft{
 				return (*this);
 			};
 			ReverseListIterator& operator++(int) {
+				ListIterator tmp = *this;
 				this->p = this->p->_prev;
-				return (*this);
+				return (tmp);
 			};
 			ReverseListIterator& operator--() {
 				this->p = this->p->_next;
 				return (*this);
 			};
 			ReverseListIterator& operator--(int) {
+				ListIterator tmp = *this;
 				this->p = this->p->_next;
-				return (*this);
+				return (tmp);
 			}
 			pointer operator->(){
 				return (this->p->_value);
