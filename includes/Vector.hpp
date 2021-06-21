@@ -41,7 +41,7 @@ namespace ft{
 				(this->p)++;
 				return (*this);
 			};
-			VectorIterator& operator++(int) {
+			VectorIterator operator++(int) {
 				VectorIterator tmp = *this;
 				++this->p;
 				return (tmp);
@@ -57,8 +57,8 @@ namespace ft{
 				(this->p)--;
 				return (*this);
 			};
-			VectorIterator& operator--(int) {
-				ListIterator tmp = *this;
+			VectorIterator operator--(int) {
+				VectorIterator tmp = *this;
 				--this->p;
 				return (tmp);
 			}
@@ -130,8 +130,8 @@ namespace ft{
 				(this->p)--;
 				return (*this);
 			};
-			ReverseIterator& operator++(int) {
-				ListIterator tmp = *this;
+			ReverseIterator operator++(int) {
+				ReverseIterator tmp = *this;
 				--this->p;
 				return (tmp);
 			};
@@ -146,8 +146,8 @@ namespace ft{
 				(this->p)++;
 				return (*this);
 			};
-			ReverseIterator& operator--(int) {
-				ListIterator tmp = *this;
+			ReverseIterator operator--(int) {
+				ReverseIterator tmp = *this;
 				++this->p;
 				return (*tmp);
 			}
@@ -270,7 +270,6 @@ namespace ft{
 					new(&this->_data[this->_size + 1]) value_type(_data[_size]);
 				}
 				new(&this->_data[this->_size + 1]) value_type(value);
-				
 				_size = old_size + 1;
 				return (it);
 			};

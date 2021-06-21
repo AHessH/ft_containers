@@ -116,7 +116,7 @@ namespace ft{
 				return (*this);
 			};
 			ReverseListIterator& operator++(int) {
-				ListIterator tmp = *this;
+				ReverseListIterator tmp = *this;
 				this->p = this->p->_prev;
 				return (tmp);
 			};
@@ -125,7 +125,7 @@ namespace ft{
 				return (*this);
 			};
 			ReverseListIterator& operator--(int) {
-				ListIterator tmp = *this;
+				ReverseListIterator tmp = *this;
 				this->p = this->p->_next;
 				return (tmp);
 			}
@@ -205,7 +205,7 @@ namespace ft{
 				this->_size--;
 				return (tmp);
 			};
-			void paste_elem(node_pointer &point, iterator &position, list &list) {
+			void paste_elem(node_pointer &point, iterator &position) {
 				node_pointer pos = this->_FNode;
 				iterator iter = this->begin();
 				while (iter != position){
